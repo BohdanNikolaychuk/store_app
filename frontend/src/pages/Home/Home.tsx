@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
-import { SimpleGrid, Text } from '@chakra-ui/react';
-import Card from '../../components/Card/Card';
-import { Link } from 'react-router-dom';
+import { SimpleGrid, Text, Box } from '@chakra-ui/react';
+import CardView from '../../components/Card/Card';
 
 const Home = () => {
   const [Store, setStore] = useState([]);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
+    fetch('https://fakestoreapi.com/products?limit=4')
       .then((res) => res.json())
       .then((json) => setStore(json));
   }, []);
 
   return (
     <>
-      <Text>Popular Nike Shoes</Text>
-      <SimpleGrid columns={1}>
+      <Text>Popular Shoes</Text>
+      <Box bg="tomato" w="100%" h={'300px'} p={4} color="white">
+        Summer Sale
+      </Box>
+      <SimpleGrid columns={2} spacing="10">
         {Store.map((element: any) => (
-          <Link key={element.id} to={`/product/${element.id}`}>
-            <Card {...element} />
-          </Link>
+          <CardView key={element.title} {...element} />
         ))}
       </SimpleGrid>
     </>

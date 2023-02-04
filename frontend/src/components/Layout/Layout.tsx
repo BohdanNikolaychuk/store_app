@@ -4,12 +4,10 @@ import Header from '../Header/Header';
 
 const Layout = () => {
   return (
-    <>
+    <Container maxW="1200px">
       <Header></Header>
-      <Container maxW="2xl">
-        <Outlet />
-      </Container>
-    </>
+      <Outlet />
+    </Container>
   );
 };
 

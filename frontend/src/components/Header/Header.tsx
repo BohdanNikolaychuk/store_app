@@ -28,17 +28,17 @@ const Header = () => {
           <HStack spacing={8} alignItems={'center'}>
             <Text>Sneaker</Text>
 
-            <InputGroup>
+            {/* <InputGroup>
               <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.300" />} />
               <Input type="tel" placeholder="What do you looking for?" />
-            </InputGroup>
+            </InputGroup> */}
           </HStack>
           <Flex alignItems={'center'}>
-            <ButtonGroup variant="outline" spacing="6">
-              <Button>
+            <ButtonGroup spacing="6">
+              <Button rounded={'30%'} background={'white'}>
                 <GrFavorite size="25px" />
               </Button>
-              <Button>
+              <Button rounded={'100%'} background={'white'}>
                 <BiShoppingBag size="25px" />
               </Button>
             </ButtonGroup>
