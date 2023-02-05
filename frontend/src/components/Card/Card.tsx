@@ -12,7 +12,7 @@ const CardView = ({ id, title, price, description, category, image }: any) => {
         />
         <Stack mt="6" spacing="3">
           <Heading size="md">{title.split(' ')[0]}</Heading>
-          <Button rounded={10} position="absolute" top={'1'} right="2">
+          <Button rounded={10} position="absolute" top={'1'} right="2" background={'white'}>
             <GrFavorite size="25px" />
           </Button>
         </Stack>
