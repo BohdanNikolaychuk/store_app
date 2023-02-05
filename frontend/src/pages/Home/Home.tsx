@@ -4,8 +4,16 @@ import CardView from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
 import Links from '../../common/Links';
 import { NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/redux.hooks';
+import { getCurrentUser } from '../../store/user/asyncActions';
 const Home = () => {
   const [Store, setStore] = useState([]);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, []);
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products?limit=4')

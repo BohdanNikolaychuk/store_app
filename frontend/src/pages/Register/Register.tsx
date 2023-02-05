@@ -1,5 +1,5 @@
 import {
-  Flex,
+  Container,
   Box,
   FormControl,
   FormLabel,
@@ -20,11 +20,11 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Flex align={'center'} justify={'center'}>
+    <Container maxW="600px">
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign up
+            Register
           </Heading>
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
@@ -76,7 +76,7 @@ const Register = () => {
           </Stack>
         </Box>
       </Stack>
-    </Flex>
+    </Container>
   );
 };
 
