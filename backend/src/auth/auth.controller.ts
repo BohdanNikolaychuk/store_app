@@ -35,8 +35,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.User)
-  @Get('/user')
+  @Get('/me')
   getProfile(@Request() req) {
     return req.user;
   }
