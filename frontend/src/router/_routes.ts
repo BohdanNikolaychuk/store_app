@@ -3,6 +3,7 @@ const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
   PRODUCTBYID: (id?: string) => (id ? `/product/${id}` : '/product/:id'),
-  NOT_MATCHING: '*'
+  NOT_MATCHING: '*',
+  CART: '/cart'
 };
 export default ROUTES;
