@@ -3,33 +3,13 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from '../schemas/product.schema';
 import { CreateProductDTO } from './dtos/create-product.dto';
-import { FilterProductDTO } from './dtos/filter-product.dto';
+
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel('Product')
     private readonly productModel: Model<ProductDocument>,
   ) {}
-
-  async getFilteredProducts(
-    filterProductDTO: FilterProductDTO,
-  ): Promise<Product[]> {
-    const { category, search } = filterProductDTO;
-    let products = await this.getAllProducts();
-
-    if (search) {
-      products = products.filter(
-        (product) =>
-          product.name.includes(search) || product.description.includes(search),
-      );
-    }
-
-    if (category) {
-      products = products.filter((product) => product.category === category);
-    }
-
-    return products;
-  }
 
   async getAllProducts(): Promise<Product[]> {
     const products = await this.productModel.find().exec();
@@ -43,6 +23,7 @@ export class ProductService {
 
   async addProduct(createProductDTO: CreateProductDTO): Promise<Product> {
     const newProduct = await this.productModel.create(createProductDTO);
+    console.log(newProduct);
     return newProduct.save();
   }
 
