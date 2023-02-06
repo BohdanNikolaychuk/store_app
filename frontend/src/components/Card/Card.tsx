@@ -1,24 +1,87 @@
-import { Image, Stack, CardBody, Heading, Text, Button, Card } from '@chakra-ui/react';
-import { GrFavorite } from 'react-icons/gr';
+import { EditIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Center,
+  useColorModeValue,
+  Heading,
+  Text,
+  Stack,
+  Image,
+  CloseButton,
+  IconButton
+} from '@chakra-ui/react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 
-const CardView = ({ id, title, price, description, category, image }: any) => {
+import { ISneakers } from '../../store/product/types';
+import { selectAuthData } from '../../store/user/selectors';
+
+const CardView = ({ _id, name, price, description, category, image_url }: ISneakers) => {
+  const { user } = useAppSelector(selectAuthData);
+  const dispatch = useAppDispatch();
+
+  const onDeleteCardByAdmin = (id: string) => {
+    console.log(id);
+    dispatch(fetchDeleteSneaker(id));
+  };
+
   return (
-    <Card sx={{ maxWidth: '312px', height: '212px' }} maxW="sm">
-      <CardBody>
-        <Image
-          src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=177&q=80"
-          alt="Green double couch with wooden legs"
-          borderRadius="lg"
-        />
-        <Stack mt="6" spacing="3">
-          <Heading size="md">{title.split(' ')[0]}</Heading>
-          <Button rounded={10} position="absolute" top={'1'} right="2" background={'white'}>
-            <GrFavorite size="25px" />
-          </Button>
+    <Center py={12}>
+      <Box
+        role={'group'}
+        p={6}
+        maxW={'330px'}
+        w={'full'}
+        bg={useColorModeValue('white', 'gray.800')}
+        boxShadow={'2xl'}
+        rounded={'lg'}
+        pos={'relative'}
+        zIndex={1}>
+        <Box
+          rounded={'lg'}
+          mt={-12}
+          pos={'relative'}
+          height={'230px'}
+          _after={{
+            transition: 'all .3s ease',
+            content: '""',
+            w: 'full',
+            h: 'full',
+            pos: 'absolute',
+            top: 5,
+            left: 0,
+            backgroundImage: `url(${image_url})`,
+            filter: 'blur(15px)',
+            zIndex: -1
+          }}
+          _groupHover={{
+            _after: {
+              filter: 'blur(20px)'
+            }
+          }}>
+          <Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={image_url} />
+        </Box>
+
+        <Stack pt={10} align={'center'}>
+          <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
+            {category}
+          </Text>
+          <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+            {name}
+          </Heading>
+          <Stack direction={'row'} align={'center'}>
+            <Text color={'gray.600'} fontWeight={500}>
+              ${price}
+            </Text>
+          </Stack>
         </Stack>
-        <Text>$450</Text>
-      </CardBody>
-    </Card>
+        {user?.roles[0] === 'admin' && (
+          <>
+            <CloseButton onClick={() => onDeleteCardByAdmin(_id)} size="lg" />
+          </>
+        )}
+      </Box>
+    </Center>
   );
 };
 

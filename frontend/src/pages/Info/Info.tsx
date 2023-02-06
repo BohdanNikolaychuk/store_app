@@ -17,11 +17,11 @@ import { BiShoppingBag } from 'react-icons/bi';
 import ROUTES from '../../router/_routes';
 
 const Info = () => {
-  const [Store, setStore] = useState({});
+  const [Store, setStore] = useState<any>({});
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
+    fetch(`http://localhost:3000/store/products/${id}`)
       .then((res) => res.json())
       .then((json) => setStore(json));
   }, []);
@@ -31,15 +31,11 @@ const Info = () => {
       <Button as={Link} to={ROUTES.MAIN}>
         Go to Main
       </Button>
-      <Image
-        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop"
-        alt="Green double couch with wooden legs"
-        borderRadius="lg"
-      />
+      <Image src={Store?.image_url} alt="Green double couch with wooden legs" borderRadius="lg" />
       <Card pos={'relative'}>
         <CardHeader pos="absolute" left="50%">
           <Box background={'#B9F636'}>
-            <Heading>$189</Heading>
+            <Heading>${Store?.price}</Heading>
           </Box>
         </CardHeader>
 
@@ -47,14 +43,13 @@ const Info = () => {
           <Stack divider={<StackDivider />} spacing="4">
             <Box>
               <Heading size="xs" textTransform="uppercase">
-                Nike
+                {Store?.category}
               </Heading>
               <Text pt="2" fontSize="sm">
-                Air Max pegasus 37
+                {Store?.name}
               </Text>
               <Text pt="2" fontSize="sm">
-                An athletic shoe is a name for a shoe designed for sporting and physical activities,
-                and is different in style.
+                {Store.description}
               </Text>
             </Box>
 

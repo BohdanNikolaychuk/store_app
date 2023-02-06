@@ -1,13 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { getCurrentUser, userLogin } from './asyncActions';
 import { State } from './types';
 
-const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
-
 const initialState: State = {
-  isAuth: !!userToken,
-  userName: null,
-  role: null,
+  isAuth: null,
+  user: null,
+  token: null,
   loading: null,
   error: null
 };
@@ -15,7 +13,16 @@ const initialState: State = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.error = null;
+      state.isAuth = null;
+      state.loading = null;
+      state.user = null;
+      state.token = null;
+      localStorage.removeItem('userToken');
+    }
+  },
   extraReducers: (builder) => {
     //login
     builder.addCase(userLogin.pending, (state) => {
@@ -25,11 +32,12 @@ const authSlice = createSlice({
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuth = true;
-
-      state.userName = action.payload.user.username;
-      state.role = action.payload.user.roles;
+      state.user = action.payload.user;
+      state.token = action.payload.access_token;
     });
     builder.addCase(userLogin.rejected, (state, action) => {
+      state.loading = false;
+      state.isAuth = null;
       state.error = action.payload as string;
     });
 
@@ -42,14 +50,15 @@ const authSlice = createSlice({
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuth = true;
-      state.userName = action.payload?.data.username;
-      state.role = action.payload?.data.roles;
+      state.user = action.payload;
     });
 
     builder.addCase(getCurrentUser.rejected, (state, action) => {
       state.error = action.payload as string;
+      state.isAuth = null;
     });
   }
 });
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
