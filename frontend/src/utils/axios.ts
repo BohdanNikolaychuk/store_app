@@ -4,7 +4,7 @@ const instans = axios.create({
   baseURL: 'http://localhost:3000'
 });
 
-instans.interceptors.request.use(async (config: AxiosRequestConfig) => {
+instans.interceptors.request.use(async (config) => {
   config.headers = config.headers ?? {};
 
   config.headers.Authorization = `Bearer ${window.localStorage.getItem('userToken')}`;

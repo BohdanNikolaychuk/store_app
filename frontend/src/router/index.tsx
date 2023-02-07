@@ -4,6 +4,7 @@ import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
 
 import Cart from '../pages/Cart/Cart';
 import { CreateProduct } from '../pages/CreateProduct/CreateProduct';
+import EditCard from '../pages/EditCard/EditCard';
 import Home from '../pages/Home/Home';
 import Info from '../pages/Info/Info';
 import Login from '../pages/Login/Login';
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         path: ROUTES.FORM_CREATE
+      },
+      {
+        element: (
+          <ProtectedRoute>
+            <EditCard />
+          </ProtectedRoute>
+        ),
+        path: ROUTES.EDIT
       },
       {
         element: <Shop />,

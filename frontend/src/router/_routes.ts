@@ -7,6 +7,7 @@ const ROUTES = {
   NOT_MATCHING: '*',
   CART: '/cart',
   FORM_CREATE: '/admin/form',
-  ALLPRODUCT: '/admin/all'
+  ALLPRODUCT: '/admin/all',
+  EDIT: '/admin/edit'
 };
 export default ROUTES;

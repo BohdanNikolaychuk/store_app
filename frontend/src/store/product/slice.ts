@@ -12,6 +12,10 @@ const sneakersSlice = createSlice({
   name: 'sneakers',
   initialState,
   reducers: {
+    addSneaker(state, action) {
+      state.sneakers.push(action.payload);
+    },
+
     removeSneaker(state, action) {
       state.sneakers = state.sneakers.filter((sneaker) => sneaker._id !== action.payload);
     }
@@ -32,6 +36,6 @@ const sneakersSlice = createSlice({
   }
 });
 
-export const { removeSneaker } = sneakersSlice.actions;
+export const { removeSneaker, addSneaker } = sneakersSlice.actions;
 
 export default sneakersSlice.reducer;
