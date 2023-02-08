@@ -1,4 +1,4 @@
-import { Button, HStack } from '@chakra-ui/react';
+import { Button, HStack, Text } from '@chakra-ui/react';
 
 import { NavLink } from 'react-router-dom';
 import Links from '../../common/Links';
@@ -6,6 +6,7 @@ import ROUTES from '../../router/_routes';
 const Shop = () => {
   return (
     <>
+      <Text>Popular Shoes</Text>
       <HStack as={'nav'} spacing={4} display={{ md: 'flex' }} justifyContent="center">
         {Links.map((link) => (
           <NavLink to={`${ROUTES.MAIN}?${link.name}`} key={link.name}>

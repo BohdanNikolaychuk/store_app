@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormControl, FormLabel, Input, Stack, Button, Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, Stack, Button, Select, Textarea } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import ROUTES from '../../router/_routes';
 import { useAppDispatch } from '../../hooks/redux.hooks';
@@ -14,14 +14,15 @@ export const CreateProduct = () => {
   const dispatch = useAppDispatch();
 
   const addFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
+    const file = e.target.files;
+    console.log(file);
   };
-
+  console.log(File);
   const OnCreateNewSneaker = () => {
     const newSneaker = {
       name,
       description,
-      price: +price,
+      price: price,
       category,
       image_url:
         'https://image.goat.com/375/attachments/product_template_pictures/images/020/627/570/original/491891_00.png.png'
@@ -43,10 +44,11 @@ export const CreateProduct = () => {
           </FormControl>
           <FormControl id="description">
             <FormLabel>Description</FormLabel>
-            <Input
+
+            <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              type="text"
+              placeholder="Here is a sample placeholder"
             />
           </FormControl>
           <FormControl id="description">

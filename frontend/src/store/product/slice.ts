@@ -18,6 +18,9 @@ const sneakersSlice = createSlice({
 
     removeSneaker(state, action) {
       state.sneakers = state.sneakers.filter((sneaker) => sneaker._id !== action.payload);
+    },
+    editSneaker(state, action) {
+      // state.sneakers = state.sneakers.
     }
   },
   extraReducers: (builder) => {

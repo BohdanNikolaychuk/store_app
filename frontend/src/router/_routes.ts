@@ -8,6 +8,6 @@ const ROUTES = {
   CART: '/cart',
   FORM_CREATE: '/admin/form',
   ALLPRODUCT: '/admin/all',
-  EDIT: '/admin/edit'
+  EDITBYID: (id?: string) => (id ? `/admin/edit/${id}` : '/admin/edit/:id')
 };
 export default ROUTES;

@@ -18,8 +18,6 @@ const Home = () => {
 
   return (
     <>
-      <Text>Popular Shoes</Text>
-
       <SimpleGrid columns={2} spacing="10">
         {sneakers.map((element: ISneakers) => (
           <NavLink

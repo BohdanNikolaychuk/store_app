@@ -1,4 +1,3 @@
-import { EditIcon } from '@chakra-ui/icons';
 import {
   Box,
   Center,
@@ -8,9 +7,11 @@ import {
   Stack,
   Image,
   CloseButton,
-  IconButton
+  Button
 } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import ROUTES from '../../router/_routes';
 import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 
 import { ISneakers } from '../../store/product/types';
@@ -77,7 +78,10 @@ const CardView = ({ _id, name, price, description, category, image_url }: ISneak
         </Stack>
         {user?.roles[0] === 'admin' && (
           <>
-            <CloseButton onClick={() => onDeleteCardByAdmin(_id)} size="lg" />
+            <CloseButton onClick={() => onDeleteCardByAdmin(_id!)} size="lg" />
+            <Button as={NavLink} to={ROUTES.EDITBYID(_id!)}>
+              Edit
+            </Button>
           </>
         )}
       </Box>

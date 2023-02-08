@@ -38,3 +38,26 @@ export const fetchAddSneaker = createAsyncThunk(
     }
   }
 );
+
+type UpdateSneaker = {
+  name?: string | undefined;
+  description?: string | undefined;
+  price?: string | undefined;
+  category?: string | undefined;
+};
+
+export const fetchEditSneakerByID = createAsyncThunk(
+  'sneaker/put',
+  async (
+    props: { newEditSneaker: UpdateSneaker; id: string | undefined },
+    { rejectWithValue, dispatch }
+  ) => {
+    const { newEditSneaker, id } = props;
+
+    try {
+      const data = await axios.put(`/store/products/${id}`, newEditSneaker);
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+);

@@ -52,7 +52,7 @@ const router = createBrowserRouter([
             <EditCard />
           </ProtectedRoute>
         ),
-        path: ROUTES.EDIT
+        path: ROUTES.EDITBYID()
       },
       {
         element: <Shop />,

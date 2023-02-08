@@ -11,31 +11,31 @@ import {
   StackDivider,
   Text
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+
 import { Link, useParams } from 'react-router-dom';
 import { BiShoppingBag } from 'react-icons/bi';
 import ROUTES from '../../router/_routes';
+import { useAppSelector } from '../../hooks/redux.hooks';
+import { selecetSneakersByID } from '../../store/product/selectors';
 
 const Info = () => {
-  const [Store, setStore] = useState<any>({});
   const { id } = useParams();
-
-  useEffect(() => {
-    fetch(`http://localhost:3000/store/products/${id}`)
-      .then((res) => res.json())
-      .then((json) => setStore(json));
-  }, []);
+  const sneakerByID = useAppSelector(selecetSneakersByID(id!));
 
   return (
     <Container>
       <Button as={Link} to={ROUTES.MAIN}>
         Go to Main
       </Button>
-      <Image src={Store?.image_url} alt="Green double couch with wooden legs" borderRadius="lg" />
+      <Image
+        src={sneakerByID?.image_url}
+        alt="Green double couch with wooden legs"
+        borderRadius="lg"
+      />
       <Card pos={'relative'}>
         <CardHeader pos="absolute" left="50%">
           <Box background={'#B9F636'}>
-            <Heading>${Store?.price}</Heading>
+            <Heading>${sneakerByID?.price}</Heading>
           </Box>
         </CardHeader>
 
@@ -43,13 +43,13 @@ const Info = () => {
           <Stack divider={<StackDivider />} spacing="4">
             <Box>
               <Heading size="xs" textTransform="uppercase">
-                {Store?.category}
+                {sneakerByID?.category}
               </Heading>
               <Text pt="2" fontSize="sm">
-                {Store?.name}
+                {sneakerByID?.name}
               </Text>
               <Text pt="2" fontSize="sm">
-                {Store.description}
+                {sneakerByID?.description}
               </Text>
             </Box>
 
