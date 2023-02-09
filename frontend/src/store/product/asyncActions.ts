@@ -25,9 +25,17 @@ export const fetchDeleteSneaker = createAsyncThunk(
   }
 );
 
+type NewSneaker = {
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  image_url: string;
+};
+
 export const fetchAddSneaker = createAsyncThunk(
   'sneakers/add',
-  async (sneaker: ISneakers, { dispatch }) => {
+  async (sneaker: NewSneaker, { dispatch }) => {
     try {
       const { data } = await axios.post('/store/products', sneaker);
       console.log(data);

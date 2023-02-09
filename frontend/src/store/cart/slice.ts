@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ISneakers } from '../product/types';
 
 type State = {
@@ -13,7 +13,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action) => {
+    addToCart: (state, action: PayloadAction<ISneakers>) => {
       const itemCart = state.cart.find((item: ISneakers) => item._id === action.payload._id);
       if (itemCart) {
         itemCart.quantity++;
