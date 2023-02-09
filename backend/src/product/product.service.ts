@@ -23,7 +23,7 @@ export class ProductService {
 
   async addProduct(createProductDTO: CreateProductDTO): Promise<Product> {
     const newProduct = await this.productModel.create(createProductDTO);
-    console.log(newProduct);
+    newProduct.quantity = 0;
     return newProduct.save();
   }
 

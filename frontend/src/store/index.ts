@@ -2,9 +2,11 @@ import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import auth from './user/slice';
 import sneakers from './product/slice';
+import cart from './cart/slice';
 const rootReducer = combineReducers({
   auth,
-  sneakers
+  sneakers,
+  cart
 });
 
 export const store = configureStore({

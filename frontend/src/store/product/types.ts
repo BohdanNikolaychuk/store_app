@@ -11,4 +11,5 @@ export interface ISneakers {
   price?: string;
   category?: string;
   image_url?: string;
+  quantity: number;
 }

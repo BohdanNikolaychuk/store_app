@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Flex,
@@ -8,7 +7,14 @@ import {
   Stack,
   useColorModeValue as mode
 } from '@chakra-ui/react';
+import { CartItem } from '../../components/CartItem/CartItem';
+import { CartOrderSummary } from '../../components/CartOrderSummary/CartOrderSummary';
+
+import { useAppSelector } from '../../hooks/redux.hooks';
+import { selectCartData } from '../../store/cart/selectors';
 const Cart = () => {
+  const { cart } = useAppSelector(selectCartData);
+  console.log(cart);
   return (
     <>
       <Box
@@ -22,13 +28,18 @@ const Cart = () => {
           spacing={{ base: '8', md: '16' }}>
           <Stack spacing={{ base: '8', md: '10' }} flex="2">
             <Heading fontSize="2xl" fontWeight="extrabold">
-              Shopping Cart (3 items)
+              Shopping Cart ({cart.length} items)
             </Heading>
 
-            <Stack spacing="6"></Stack>
+            <Stack spacing="6">
+              {cart.map((item) => (
+                <CartItem key={item._id} {...item} />
+              ))}
+            </Stack>
           </Stack>
 
           <Flex direction="column" align="center" flex="1">
+            <CartOrderSummary />
             <HStack mt="6" fontWeight="semibold">
               <p>or</p>
               <Link color={mode('blue.500', 'blue.200')}>Continue shopping</Link>

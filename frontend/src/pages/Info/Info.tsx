@@ -15,12 +15,18 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { BiShoppingBag } from 'react-icons/bi';
 import ROUTES from '../../router/_routes';
-import { useAppSelector } from '../../hooks/redux.hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { selecetSneakersByID } from '../../store/product/selectors';
+import { addToCart } from '../../store/cart/slice';
 
 const Info = () => {
   const { id } = useParams();
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
+  const dispatch = useAppDispatch();
+
+  const onAddToCart = () => {
+    dispatch(addToCart(sneakerByID));
+  };
 
   return (
     <Container>
@@ -53,7 +59,7 @@ const Info = () => {
               </Text>
             </Box>
 
-            <Button>
+            <Button onClick={() => onAddToCart()}>
               <BiShoppingBag size="25px" />
               <Text>Add to Cart</Text>
             </Button>

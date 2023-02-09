@@ -4,4 +4,5 @@ export class CreateProductDTO {
   price: number;
   category: string;
   image_url: string;
+  quantity: number;
 }

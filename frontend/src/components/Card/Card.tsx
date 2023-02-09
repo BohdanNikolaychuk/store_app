@@ -9,6 +9,7 @@ import {
   CloseButton,
   Button
 } from '@chakra-ui/react';
+import { BiShoppingBag } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
