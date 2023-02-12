@@ -9,7 +9,7 @@ import {
   CloseButton,
   Button
 } from '@chakra-ui/react';
-import { BiShoppingBag } from 'react-icons/bi';
+
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
@@ -18,24 +18,23 @@ import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 import { ISneakers } from '../../store/product/types';
 import { selectAuthData } from '../../store/user/selectors';
 
-const CardView = ({ _id, name, price, description, category, image_url }: ISneakers) => {
+const CardView = ({ _id, name, price, category, image_url }: ISneakers) => {
   const { user } = useAppSelector(selectAuthData);
   const dispatch = useAppDispatch();
 
   const onDeleteCardByAdmin = (id: string) => {
-    console.log(id);
     dispatch(fetchDeleteSneaker(id));
   };
 
   return (
     <Center py={12}>
       <Box
+        sx={{ maxWidth: '250px', height: '360px', position: 'relative' }}
         role={'group'}
         p={6}
         maxW={'330px'}
         w={'full'}
         bg={useColorModeValue('white', 'gray.800')}
-        boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
         zIndex={1}>
@@ -65,16 +64,11 @@ const CardView = ({ _id, name, price, description, category, image_url }: ISneak
         </Box>
 
         <Stack pt={10} align={'center'}>
-          <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-            {category}
-          </Text>
-          <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+          <Heading fontSize={'md'} color={'#696969'} fontWeight={500}>
             {name}
           </Heading>
           <Stack direction={'row'} align={'center'}>
-            <Text color={'gray.600'} fontWeight={500}>
-              ${price}
-            </Text>
+            <Text fontWeight={500}>${price}</Text>
           </Stack>
         </Stack>
         {user?.roles[0] === 'admin' && (

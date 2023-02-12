@@ -14,7 +14,7 @@ import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectCartData } from '../../store/cart/selectors';
 const Cart = () => {
   const { cart } = useAppSelector(selectCartData);
-  console.log(cart);
+
   return (
     <>
       <Box
@@ -28,10 +28,11 @@ const Cart = () => {
           spacing={{ base: '8', md: '16' }}>
           <Stack spacing={{ base: '8', md: '10' }} flex="2">
             <Heading fontSize="2xl" fontWeight="extrabold">
-              Shopping Cart ({cart.length} items)
+              ITEM
             </Heading>
-
+            <hr />
             <Stack spacing="6">
+              {cart.length === 0 && <>You have no items in your shopping cart.</>}
               {cart.map((item) => (
                 <CartItem key={item._id} {...item} />
               ))}

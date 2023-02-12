@@ -18,7 +18,7 @@ import ROUTES from '../../router/_routes';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { selecetSneakersByID } from '../../store/product/selectors';
 import { addToCart } from '../../store/cart/slice';
-
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 const Info = () => {
   const { id } = useParams();
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
@@ -30,8 +30,8 @@ const Info = () => {
 
   return (
     <Container>
-      <Button as={Link} to={ROUTES.MAIN}>
-        Go to Main
+      <Button bg="inherit" as={Link} to={ROUTES.MAIN}>
+        <AiOutlineArrowLeft size={'25px'} />
       </Button>
       <Image
         src={sneakerByID?.image_url}
@@ -40,9 +40,7 @@ const Info = () => {
       />
       <Card pos={'relative'}>
         <CardHeader pos="absolute" left="50%">
-          <Box background={'#B9F636'}>
-            <Heading>${sneakerByID?.price}</Heading>
-          </Box>
+          <Heading>${sneakerByID?.price}</Heading>
         </CardHeader>
 
         <CardBody>

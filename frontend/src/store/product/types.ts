@@ -5,11 +5,11 @@ export interface State {
 }
 
 export interface ISneakers {
-  _id?: string;
-  name?: string;
-  description?: string;
-  price?: string;
-  category?: string;
-  image_url?: string;
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image_url: string;
   quantity: number;
 }

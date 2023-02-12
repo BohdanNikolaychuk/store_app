@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
+import PublicRoute from '../components/PublicRoute/PublicRoute';
 
 import Cart from '../pages/Cart/Cart';
 import { CreateProduct } from '../pages/CreateProduct/CreateProduct';
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
         path: ROUTES.PRODUCTBYID()
       },
       {
-        element: <Cart />,
+        element: (
+          <PublicRoute>
+            <Cart />
+          </PublicRoute>
+        ),
         path: ROUTES.CART
       },
       {

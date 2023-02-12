@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import './App.css';
+
 import { useAppDispatch } from './hooks/redux.hooks';
 
 import router from './router';
@@ -15,7 +15,7 @@ function App() {
     }
 
     dispatch(fetchAllSneakers());
-  }, []);
+  }, [dispatch, localStorage.getItem('userToken')]);
 
   return <RouterProvider router={router}></RouterProvider>;
 }

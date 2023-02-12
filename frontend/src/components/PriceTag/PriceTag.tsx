@@ -2,7 +2,7 @@ import { HStack, Text, TextProps, useColorModeValue as mode } from '@chakra-ui/r
 import { ReactNode } from 'react';
 
 interface PriceTagProps {
-  price: string;
+  price: number;
 }
 
 export type FormatPriceOptions = { locale?: string; currency?: string };
@@ -21,7 +21,7 @@ export const PriceTag = (props: PriceTagProps) => {
   const { price } = props;
   return (
     <HStack spacing="1">
-      <Price>{price}</Price>
+      <Price>{price} $</Price>
     </HStack>
   );
 };

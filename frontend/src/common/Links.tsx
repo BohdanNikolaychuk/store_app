@@ -13,12 +13,17 @@ const Links = [
     icon: <Adidas />
   },
   {
-    name: 'Jordan',
+    name: 'Air Jordan',
     icon: <Jordan />
   },
   {
     name: 'Rebok',
     icon: <Rebok />
+  },
+  ,
+  {
+    name: 'Shop All',
+    icon: ''
   }
 ];
 

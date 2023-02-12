@@ -1,13 +1,4 @@
-import {
-  Box,
-  HStack,
-  Icon,
-  Image,
-  Link,
-  Stack,
-  Text,
-  useColorModeValue as mode
-} from '@chakra-ui/react';
+import { Box, Image, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react';
 
 export type CartProductMetaProps = {
   name: string;
@@ -16,7 +7,7 @@ export type CartProductMetaProps = {
 };
 
 export const CartProductMeta = (props: CartProductMetaProps) => {
-  const { image, name, description } = props;
+  const { image, name } = props;
   return (
     <Stack direction="row" spacing="5" width="full">
       <Image

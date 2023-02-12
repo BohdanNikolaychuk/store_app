@@ -1,47 +1,29 @@
-import {
-  Button,
-  Flex,
-  Heading,
-  Link,
-  Stack,
-  Text,
-  useColorModeValue as mode
-} from '@chakra-ui/react';
+import { Button, Flex, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react';
 import { FaArrowRight } from 'react-icons/fa';
-import { formatPrice } from '../PriceTag/PriceTag';
-
-type OrderSummaryItemProps = {
-  label: string;
-  value?: string;
-  children?: React.ReactNode;
-};
-
-const OrderSummaryItem = (props: OrderSummaryItemProps) => {
-  const { label, value, children } = props;
-  return (
-    <Flex justify="space-between" fontSize="sm">
-      <Text fontWeight="medium" color={mode('gray.600', 'gray.400')}>
-        {label}
-      </Text>
-      {value ? <Text fontWeight="medium">{value}</Text> : children}
-    </Flex>
-  );
-};
+import { useAppSelector } from '../../hooks/redux.hooks';
+import { selectCartData } from '../../store/cart/selectors';
 
 export const CartOrderSummary = () => {
+  const { cart } = useAppSelector(selectCartData);
+  const getTotal = () => {
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    cart.forEach((item) => {
+      totalQuantity += item.quantity;
+      totalPrice += item.price * item.quantity;
+    });
+    return { totalPrice, totalQuantity };
+  };
+
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
-      <Heading size="md">Order Summary</Heading>
-
       <Stack spacing="6">
-        <OrderSummaryItem label="Subtotal" value={formatPrice(597)} />
-
         <Flex justify="space-between">
           <Text fontSize="lg" fontWeight="semibold">
             Total
           </Text>
           <Text fontSize="xl" fontWeight="extrabold">
-            {formatPrice(597)}
+            {getTotal().totalPrice} $
           </Text>
         </Flex>
       </Stack>
