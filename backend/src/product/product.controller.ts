@@ -7,11 +7,14 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { ProductService } from './product.service';
 
+import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
@@ -32,11 +35,23 @@ export class ProductController {
     if (!product) throw new NotFoundException('Product does not exist!');
     return product;
   }
+
+  @Post('/')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
-  @Post('/')
-  async addProduct(@Body() createProductDTO: CreateProductDTO) {
-    const product = await this.productService.addProduct(createProductDTO);
+  @UseInterceptors(FileInterceptor('image_url'))
+  async addProduct(@UploadedFile() file, @Body() body: CreateProductDTO) {
+    const { name, description, price, category, image_url } = body;
+
+    const product = await this.productService.addProduct({
+      name,
+      description,
+      price,
+      category,
+      image_url,
+      quantity: 0,
+    });
+
     return product;
   }
   @UseGuards(JwtAuthGuard, RolesGuard)

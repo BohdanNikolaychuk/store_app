@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { Product, ProductDocument } from '../schemas/product.schema';
 import { CreateProductDTO } from './dtos/create-product.dto';
 
@@ -23,7 +23,7 @@ export class ProductService {
 
   async addProduct(createProductDTO: CreateProductDTO): Promise<Product> {
     const newProduct = await this.productModel.create(createProductDTO);
-    newProduct.quantity = 0;
+
     return newProduct.save();
   }
 
