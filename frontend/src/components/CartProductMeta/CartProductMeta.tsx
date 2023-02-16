@@ -2,12 +2,12 @@ import { Box, Image, Stack, Text } from '@chakra-ui/react';
 
 export type CartProductMetaProps = {
   name: string;
-  description: string;
   image: string;
+  size: string;
 };
 
 export const CartProductMeta = (props: CartProductMetaProps) => {
-  const { image, name, description } = props;
+  const { image, name, size } = props;
   return (
     <Stack direction="row" spacing="5" width="full">
       <Image
@@ -23,7 +23,7 @@ export const CartProductMeta = (props: CartProductMetaProps) => {
       <Box pt="4">
         <Stack spacing="0.5">
           <Text fontWeight="medium">{name}</Text>
-          <Text fontWeight="medium">{description}</Text>
+          <Text>Size:{size}</Text>
         </Stack>
       </Box>
     </Stack>

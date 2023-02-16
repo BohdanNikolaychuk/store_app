@@ -12,15 +12,21 @@ import {
 } from '@chakra-ui/react';
 
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import ROUTES from '../../router/_routes';
 import { addToCart } from '../../store/cart/slice';
 import { selecetSneakersByID } from '../../store/product/selectors';
 const Info = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
   const dispatch = useAppDispatch();
+
+  const GoBack = () => {
+    navigate(-1);
+  };
 
   const onAddToCart = () => {
     const AddSneakerToCart = {
@@ -33,7 +39,7 @@ const Info = () => {
 
   return (
     <Container maxW={'1200px'}>
-      <Button bg="inherit" as={Link} to={ROUTES.MAIN}>
+      <Button bg="inherit" onClick={GoBack}>
         <AiOutlineArrowLeft size={'25px'} />
       </Button>
 

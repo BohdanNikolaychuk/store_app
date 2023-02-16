@@ -1,4 +1,4 @@
-import { Button, Flex, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react';
+import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import { FaArrowRight } from 'react-icons/fa';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectCartData } from '../../store/cart/selectors';
@@ -27,7 +27,7 @@ export const CartOrderSummary = () => {
           </Text>
         </Flex>
       </Stack>
-      <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
+      <Button colorScheme="teal" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
         Checkout
       </Button>
     </Stack>

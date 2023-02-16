@@ -1,14 +1,31 @@
-import axios from '../../utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ILogin, IRegistration } from '../../@types/IAuth.interface';
+import axios from '../../utils/axios';
 import { logout } from './slice';
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async ({ username, email, password }: IRegistration, { rejectWithValue }) => {
+    try {
+      await axios.post(`auth/register`, { username, email, password });
+    } catch (err: any) {
+      let error = err;
+
+      if (error.message) {
+        throw rejectWithValue(error.message);
+      }
+      if (error.response.data.result) {
+        throw rejectWithValue(error.message);
+      }
+    }
+  }
+);
 
 export const userLogin = createAsyncThunk(
   'auth/login',
   async (UserData: ILogin, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`auth/login`, UserData);
-      console.log(data);
 
       localStorage.setItem('userToken', data.access_token);
       return data;
@@ -32,9 +49,9 @@ export const getCurrentUser = createAsyncThunk(
       const { data } = await axios.get(`auth/me`);
       return data;
     } catch (err: any) {
+      dispatch(logout());
       let error = err;
       if (error.response.message) {
-        dispatch(logout());
         throw rejectWithValue(error.message);
       }
     }

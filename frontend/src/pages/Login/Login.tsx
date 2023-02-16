@@ -1,28 +1,35 @@
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
-  Flex,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
   Heading,
   Input,
-  Button,
-  Text,
-  Alert,
-  AlertIcon,
-  AlertDescription
+  InputGroup,
+  InputRightElement,
+  Stack,
+  Text
 } from '@chakra-ui/react';
-
 import { NavLink, useNavigate } from 'react-router-dom';
 import ROUTES from '../../router/_routes';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
 import { ILogin } from '../../@types/IAuth.interface';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
 import { selectAuthData } from '../../store/user/selectors';
 
-const Login = () => {
+const Login: React.FC = () => {
   const { isAuth } = useAppSelector(selectAuthData);
-
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -50,58 +57,79 @@ const Login = () => {
     navigate(ROUTES.MAIN);
   }
   return (
-    <Flex h="100vh" alignItems="center" justifyContent="center">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Flex flexDirection="column" p={12} borderRadius={8} boxShadow="lg">
-          <Heading mb={6}>Log In</Heading>
+    <>
+      <Container maxW="600px">
+        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack align={'center'}>
+              <Heading fontSize={'4xl'} textAlign={'center'}>
+                Login
+              </Heading>
+            </Stack>
+            <Box rounded={'lg'} boxShadow={'lg'} p={8}>
+              <Stack spacing={4}>
+                <Box>
+                  <FormControl isRequired>
+                    <FormLabel>User Name</FormLabel>
+                    <Input
+                      placeholder="User Name"
+                      type="text"
+                      {...register('username')}
+                      variant="filled"
+                    />
+                  </FormControl>
+                </Box>
+                {errors.username?.message && (
+                  <Alert status="error">
+                    <AlertIcon />
 
-          <Input
-            {...register('username')}
-            placeholder="User Name"
-            type="text"
-            variant="filled"
-            mb={3}
-          />
+                    <AlertDescription>{errors.username?.message}</AlertDescription>
+                  </Alert>
+                )}
+                <FormControl id="password" isRequired>
+                  <FormLabel>Password</FormLabel>
+                  <InputGroup>
+                    <Input
+                      {...register('password')}
+                      placeholder="Password"
+                      type={showPassword ? 'text' : 'password'}
+                      variant="filled"
+                    />
+                    <InputRightElement h={'full'}>
+                      <Button
+                        variant={'ghost'}
+                        onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                </FormControl>
+                {errors.password?.message && (
+                  <Alert status="error">
+                    <AlertIcon />
 
-          {errors.username?.message && (
-            <Alert status="error">
-              <AlertIcon />
-
-              <AlertDescription>{errors.username?.message}</AlertDescription>
-            </Alert>
-          )}
-
-          <Input
-            {...register('password')}
-            placeholder="******"
-            type="password"
-            autoComplete="on"
-            variant="filled"
-            autoCorrect="on"
-            mb={6}
-          />
-
-          {errors.password?.message && (
-            <Alert status="error">
-              <AlertIcon />
-
-              <AlertDescription>{errors.password?.message}</AlertDescription>
-            </Alert>
-          )}
-
-          <Button disabled={!isValid} type="submit" colorScheme="teal" mb={8}>
-            Log In
-          </Button>
-
-          <Text mb={6}>
-            If you not have an account you can
-            <Button as={NavLink} to="/register">
-              Register
-            </Button>
-          </Text>
-        </Flex>
-      </form>
-    </Flex>
+                    <AlertDescription>{errors.password?.message}</AlertDescription>
+                  </Alert>
+                )}
+                <Stack pt={2}>
+                  <Button type="submit" colorScheme="teal" mb={8}>
+                    Log In
+                  </Button>
+                </Stack>
+                <Stack>
+                  <Text align={'center'}>
+                    New Customers?{'   '}
+                    <NavLink to={ROUTES.REGISTER} color={'blue.400'}>
+                      Create an account
+                    </NavLink>
+                  </Text>
+                </Stack>
+              </Stack>
+            </Box>
+          </form>
+        </Stack>
+      </Container>
+    </>
   );
 };
 

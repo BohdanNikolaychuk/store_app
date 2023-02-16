@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllSneakers } from './asyncActions';
-import { ISneakers, State } from './types';
+import { State } from './types';
 
 const initialState: State = {
   sneakers: [],

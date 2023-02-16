@@ -48,17 +48,16 @@ const Header = () => {
             </ButtonGroup>
           </>
         )}
-        {user?.roles[0] === 'admin' ? (
-          <></>
-        ) : (
-          <ButtonGroup spacing="6">
-            <Button as={NavLink} to={ROUTES.CART} rounded={'30%'} background={'white'}>
-              {cart.length}
-              <BiShoppingBag size="25px" />
-            </Button>
-          </ButtonGroup>
-        )}
+
         <Flex alignItems={'center'}>
+          {user?.roles[0] !== 'admin' && (
+            <ButtonGroup spacing="6">
+              <Button as={NavLink} to={ROUTES.CART} rounded={'30%'} background={'white'}>
+                {cart.length}
+                <BiShoppingBag size="25px" />
+              </Button>
+            </ButtonGroup>
+          )}
           <Menu>
             <MenuButton
               as={Button}

@@ -1,7 +1,6 @@
-import axios from '../../utils/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from '../../utils/axios';
 import { addSneaker, removeSneaker } from './slice';
-import { ISneakers } from './types';
 
 export const fetchAllSneakers = createAsyncThunk('sneakers/get', async () => {
   try {

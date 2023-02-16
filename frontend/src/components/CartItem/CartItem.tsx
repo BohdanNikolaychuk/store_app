@@ -5,7 +5,7 @@ import { ISneakers } from '../../store/product/types';
 import { CartProductMeta } from '../CartProductMeta/CartProductMeta';
 import { PriceTag } from '../PriceTag/PriceTag';
 
-export const CartItem = ({ _id, name, description, quantity, image_url, price }: ISneakers) => {
+export const CartItem = ({ _id, name, quantity, image_url, price, size }: ISneakers) => {
   const dispatch = useAppDispatch();
   const deleteFromCart = () => {
     dispatch(removeItem(_id));
@@ -20,14 +20,16 @@ export const CartItem = ({ _id, name, description, quantity, image_url, price }:
 
   return (
     <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" align="center">
-      <CartProductMeta name={name!} description={description!} image={image_url!} />
+      <CartProductMeta name={name!} size={size!} image={image_url!} />
 
       <Flex width="full" justify="space-between" display={{ base: 'none', md: 'flex' }}>
         <PriceTag price={price!} />
 
         <Flex alignItems={'center'}>
           <Button onClick={() => onDecrement(_id!)}>-</Button>
-          <Box bg={'gray.600'}>{quantity}</Box>
+          <Box mr="5" ml="5">
+            {quantity}
+          </Box>
           <Button onClick={() => onIncrement(_id!)}>+</Button>
         </Flex>
 

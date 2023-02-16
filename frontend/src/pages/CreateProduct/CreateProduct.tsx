@@ -1,23 +1,24 @@
+import { Button, FormControl, FormLabel, Input, Select, Stack, Textarea } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { FormControl, FormLabel, Input, Stack, Button, Select, Textarea } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import ROUTES from '../../router/_routes';
 import { useAppDispatch } from '../../hooks/redux.hooks';
+import ROUTES from '../../router/_routes';
 import { fetchAddSneaker } from '../../store/product/asyncActions';
 export const CreateProduct = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
-  const [File, setFile] = useState(null);
+  const [file, setFile] = useState('');
 
   const dispatch = useAppDispatch();
 
   const addFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files;
-    console.log(file);
+    if (e.target.files) {
+      setFile(e.target.files[0].name);
+    }
   };
-  console.log(File);
+
   const OnCreateNewSneaker = () => {
     const newSneaker = {
       name,
@@ -25,10 +26,11 @@ export const CreateProduct = () => {
       price: price,
       category,
       image_url:
-        'https://image.goat.com/375/attachments/product_template_pictures/images/020/627/570/original/491891_00.png.png'
+        'https://rundownmarketplace.com/media/catalog/product/cache/338761ca9ab59f63a51ce082c1ed9412/i/m/img_2641.jpg'
     };
     dispatch(fetchAddSneaker(newSneaker));
   };
+  console.log(file);
 
   return (
     <>

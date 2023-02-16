@@ -1,31 +1,8 @@
-import {
-  Box,
-  Button,
-  Center,
-  CloseButton,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  useColorModeValue
-} from '@chakra-ui/react';
-
-import { NavLink } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import ROUTES from '../../router/_routes';
-import { fetchDeleteSneaker } from '../../store/product/asyncActions';
+import { Box, Center, Heading, Image, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 
 import { ISneakers } from '../../store/product/types';
-import { selectAuthData } from '../../store/user/selectors';
 
 const CardView = ({ _id, name, price, category, image_url }: ISneakers) => {
-  const { user } = useAppSelector(selectAuthData);
-  const dispatch = useAppDispatch();
-
-  const onDeleteCardByAdmin = (id: string) => {
-    dispatch(fetchDeleteSneaker(id));
-  };
-
   return (
     <Center py={12}>
       <Box
@@ -38,30 +15,7 @@ const CardView = ({ _id, name, price, category, image_url }: ISneakers) => {
         rounded={'lg'}
         pos={'relative'}
         zIndex={1}>
-        <Box
-          rounded={'lg'}
-          mt={-12}
-          pos={'relative'}
-          height={'230px'}
-          _after={{
-            transition: 'all .3s ease',
-            content: '""',
-            w: 'full',
-            h: 'full',
-            pos: 'absolute',
-            top: 5,
-            left: 0,
-            backgroundImage: `url(${image_url})`,
-            filter: 'blur(15px)',
-            zIndex: -1
-          }}
-          _groupHover={{
-            _after: {
-              filter: 'blur(20px)'
-            }
-          }}>
-          <Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={image_url} />
-        </Box>
+        <Image rounded={'lg'} height={230} width={282} objectFit={'cover'} src={image_url} />
 
         <Stack pt={10} align={'center'}>
           <Heading fontSize={'md'} color={'#696969'} fontWeight={500}>
@@ -71,14 +25,6 @@ const CardView = ({ _id, name, price, category, image_url }: ISneakers) => {
             <Text fontWeight={500}>${price}</Text>
           </Stack>
         </Stack>
-        {user?.roles[0] === 'admin' && (
-          <>
-            <CloseButton onClick={() => onDeleteCardByAdmin(_id!)} size="lg" />
-            <Button as={NavLink} to={ROUTES.EDITBYID(_id!)}>
-              Edit
-            </Button>
-          </>
-        )}
       </Box>
     </Center>
   );
