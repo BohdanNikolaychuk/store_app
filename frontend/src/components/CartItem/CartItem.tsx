@@ -1,9 +1,9 @@
-import { Button, CloseButton, Flex, Link, Box } from '@chakra-ui/react';
-import { PriceTag } from '../PriceTag/PriceTag';
-import { CartProductMeta } from '../CartProductMeta/CartProductMeta';
-import { ISneakers } from '../../store/product/types';
+import { Box, Button, CloseButton, Flex, Link } from '@chakra-ui/react';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import { decrementQuantity, incrementQuantity, removeItem } from '../../store/cart/slice';
+import { ISneakers } from '../../store/product/types';
+import { CartProductMeta } from '../CartProductMeta/CartProductMeta';
+import { PriceTag } from '../PriceTag/PriceTag';
 
 export const CartItem = ({ _id, name, description, quantity, image_url, price }: ISneakers) => {
   const dispatch = useAppDispatch();

@@ -1,69 +1,68 @@
 import {
+  Box,
   Button,
   Container,
-  Image,
-  Box,
-  Card,
-  CardHeader,
+  Flex,
   Heading,
-  CardBody,
+  Image,
+  Select,
   Stack,
   StackDivider,
   Text
 } from '@chakra-ui/react';
 
-import { Link, useParams } from 'react-router-dom';
-import { BiShoppingBag } from 'react-icons/bi';
-import ROUTES from '../../router/_routes';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import { selecetSneakersByID } from '../../store/product/selectors';
-import { addToCart } from '../../store/cart/slice';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { Link, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import ROUTES from '../../router/_routes';
+import { addToCart } from '../../store/cart/slice';
+import { selecetSneakersByID } from '../../store/product/selectors';
 const Info = () => {
   const { id } = useParams();
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
   const dispatch = useAppDispatch();
 
   const onAddToCart = () => {
-    dispatch(addToCart(sneakerByID));
+    const AddSneakerToCart = {
+      ...sneakerByID,
+      size: 2
+    };
+
+    dispatch(addToCart(AddSneakerToCart));
   };
 
   return (
-    <Container>
+    <Container maxW={'1200px'}>
       <Button bg="inherit" as={Link} to={ROUTES.MAIN}>
         <AiOutlineArrowLeft size={'25px'} />
       </Button>
-      <Image
-        src={sneakerByID?.image_url}
-        alt="Green double couch with wooden legs"
-        borderRadius="lg"
-      />
-      <Card pos={'relative'}>
-        <CardHeader pos="absolute" left="50%">
-          <Heading>${sneakerByID?.price}</Heading>
-        </CardHeader>
 
-        <CardBody>
+      <Flex mt="20" justifyContent="space-between">
+        <Image src={sneakerByID?.image_url} borderRadius="full" />
+
+        <Box w={'50%'}>
+          <Heading>{sneakerByID?.name}</Heading>
+
           <Stack divider={<StackDivider />} spacing="4">
             <Box>
-              <Heading size="xs" textTransform="uppercase">
-                {sneakerByID?.category}
-              </Heading>
-              <Text pt="2" fontSize="sm">
-                {sneakerByID?.name}
+              <Text pt="2" fontSize="2xl">
+                Price : ${sneakerByID?.price}
               </Text>
-              <Text pt="2" fontSize="sm">
-                {sneakerByID?.description}
+              <Text pt="2" fontSize="xl">
+                Size
               </Text>
+              <Select placeholder="Select option">
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+              </Select>
             </Box>
-
-            <Button onClick={() => onAddToCart()}>
-              <BiShoppingBag size="25px" />
-              <Text>Add to Cart</Text>
-            </Button>
           </Stack>
-        </CardBody>
-      </Card>
+          <Button mt="10" onClick={() => onAddToCart()}>
+            <Text textTransform="uppercase">add To Cart</Text>
+          </Button>
+        </Box>
+      </Flex>
     </Container>
   );
 };

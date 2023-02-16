@@ -1,13 +1,13 @@
 import {
   Box,
+  Button,
   Center,
-  useColorModeValue,
-  Heading,
-  Text,
-  Stack,
-  Image,
   CloseButton,
-  Button
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react';
 
 import { NavLink } from 'react-router-dom';

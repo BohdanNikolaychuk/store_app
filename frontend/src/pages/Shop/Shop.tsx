@@ -16,7 +16,6 @@ const Shop = () => {
   if (loading) {
     return <>Loading</>;
   }
-
   const filterArray = sneakers.filter((element) => element.category === searchParams.get('name'));
 
   return (

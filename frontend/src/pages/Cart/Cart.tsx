@@ -12,6 +12,7 @@ import { CartOrderSummary } from '../../components/CartOrderSummary/CartOrderSum
 
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectCartData } from '../../store/cart/selectors';
+import { ISneakers } from '../../store/product/types';
 const Cart = () => {
   const { cart } = useAppSelector(selectCartData);
 
@@ -33,12 +34,12 @@ const Cart = () => {
             <hr />
             <Stack spacing="6">
               {cart.length === 0 && <>You have no items in your shopping cart.</>}
-              {cart.map((item) => (
+              {cart.map((item: ISneakers) => (
                 <CartItem key={item._id} {...item} />
               ))}
             </Stack>
           </Stack>
-
+          <Flex></Flex>
           <Flex direction="column" align="center" flex="1">
             <CartOrderSummary />
             <HStack mt="6" fontWeight="semibold">

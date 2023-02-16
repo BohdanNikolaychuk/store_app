@@ -1,25 +1,25 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Flex,
   HStack,
-  Button,
-  Text,
-  ButtonGroup,
-  MenuButton,
   Menu,
+  MenuButton,
+  MenuItem,
   MenuList,
-  MenuItem
+  Text
 } from '@chakra-ui/react';
 
-import { NavLink } from 'react-router-dom';
-import { CgProfile } from 'react-icons/cg';
 import { BiShoppingBag } from 'react-icons/bi';
-import ROUTES from '../../router/_routes';
+import { CgProfile } from 'react-icons/cg';
+import { NavLink } from 'react-router-dom';
+import Links from '../../common/Links';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import ROUTES from '../../router/_routes';
+import { selectCartData } from '../../store/cart/selectors';
 import { selectAuthData } from '../../store/user/selectors';
 import { logout } from '../../store/user/slice';
-import { selectCartData } from '../../store/cart/selectors';
-import Links from '../../common/Links';
 
 const Header = () => {
   const { user, isAuth } = useAppSelector(selectAuthData);
@@ -40,10 +40,7 @@ const Header = () => {
         {user?.roles[0] === 'admin' && (
           <>
             <ButtonGroup variant="link" spacing="8">
-              {[
-                { name: 'All Product', to: ROUTES.ALLPRODUCT },
-                { name: 'Create new product', to: ROUTES.FORM_CREATE }
-              ].map((item) => (
+              {[{ name: 'Create new product', to: ROUTES.FORM_CREATE }].map((item) => (
                 <Button as={NavLink} to={item.to} key={item.name}>
                   {item.name}
                 </Button>
@@ -51,15 +48,17 @@ const Header = () => {
             </ButtonGroup>
           </>
         )}
-
-        <Flex alignItems={'center'}>
+        {user?.roles[0] === 'admin' ? (
+          <></>
+        ) : (
           <ButtonGroup spacing="6">
             <Button as={NavLink} to={ROUTES.CART} rounded={'30%'} background={'white'}>
               {cart.length}
               <BiShoppingBag size="25px" />
             </Button>
           </ButtonGroup>
-
+        )}
+        <Flex alignItems={'center'}>
           <Menu>
             <MenuButton
               as={Button}
