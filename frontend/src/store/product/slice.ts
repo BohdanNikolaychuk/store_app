@@ -15,12 +15,12 @@ const sneakersSlice = createSlice({
     addSneaker(state, action) {
       state.sneakers.push(action.payload);
     },
-
     removeSneaker(state, action) {
       state.sneakers = state.sneakers.filter((sneaker) => sneaker._id !== action.payload);
     },
     editSneaker(state, action) {
-      // state.sneakers = state.sneakers.
+      const index = state.sneakers.findIndex((element) => element._id === action.payload._id);
+      state.sneakers[index] = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -39,6 +39,6 @@ const sneakersSlice = createSlice({
   }
 });
 
-export const { removeSneaker, addSneaker } = sneakersSlice.actions;
+export const { removeSneaker, addSneaker, editSneaker } = sneakersSlice.actions;
 
 export default sneakersSlice.reducer;

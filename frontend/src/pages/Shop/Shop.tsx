@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from '@chakra-ui/react';
+import { Box, Container, SimpleGrid, Text } from '@chakra-ui/react';
 
 import CardView from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
@@ -26,18 +26,27 @@ const Shop = () => {
 
   return (
     <>
-      <Box bg="gray" w="100%" p={4} color="white">
-        {searchParams.get('name')}
+      <Box bg="#f9f9f9" w="100%" p={4} color="white">
+        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
+          {searchParams.get('name')}
+        </Text>
+
+        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
+          <NavLink to={ROUTES.MAIN}>Shop/</NavLink>
+          {searchParams.get('name')}
+        </Text>
       </Box>
-      <SimpleGrid columns={3}>
-        {filterSnaker.map((element: ISneakers) => (
-          <NavLink
-            key={element._id}
-            to={user?.roles[0] === 'admin' ? '' : `${ROUTES.PRODUCTBYID(element._id)}`}>
-            <CardView {...element} />
-          </NavLink>
-        ))}
-      </SimpleGrid>
+      <Container maxW="1200px">
+        <SimpleGrid columns={3}>
+          {filterSnaker.map((element: ISneakers) => (
+            <NavLink
+              key={element._id}
+              to={user?.roles[0] === 'admin' ? '' : `${ROUTES.PRODUCTBYID(element._id)}`}>
+              <CardView {...element} />
+            </NavLink>
+          ))}
+        </SimpleGrid>
+      </Container>
     </>
   );
 };

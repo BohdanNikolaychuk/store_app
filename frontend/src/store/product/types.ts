@@ -8,7 +8,7 @@ export interface ISneakers {
   _id: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
   category: string;
   image_url: string;
   quantity: number;

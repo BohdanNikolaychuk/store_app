@@ -1,7 +1,13 @@
-import { Table, TableContainer, Tbody, Td, Tr } from '@chakra-ui/react';
+import { Button, Table, TableContainer, Tbody, Td, Tr } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/redux.hooks';
+import ROUTES from '../../router/_routes';
+import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 import { ISneakers } from '../../store/product/types';
 
 const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <TableContainer>
@@ -9,18 +15,16 @@ const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
           <Tbody>
             <Tr>
               <Td>{_id}</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-            </Tr>
-            <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
-            </Tr>
-            <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
+              <Td>{name}</Td>
+
+              <Td>{category}</Td>
+              <Td>{price}$</Td>
+              <Td>
+                <Button as={NavLink} to={ROUTES.EDITBYID(_id)}>
+                  Edit
+                </Button>
+                <Button onClick={() => dispatch(fetchDeleteSneaker(_id))}>Delete</Button>
+              </Td>
             </Tr>
           </Tbody>
         </Table>

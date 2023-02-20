@@ -63,7 +63,7 @@ const Register: React.FC = () => {
               Sign up
             </Heading>
           </Stack>
-          <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
+          <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} p={8}>
             <Stack spacing={4}>
               <Box>
                 <FormControl isRequired>

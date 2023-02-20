@@ -1,10 +1,10 @@
+import { Button, FormControl, FormLabel, Input, Select, Stack, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
-import { FormControl, FormLabel, Input, Stack, Button, Textarea, Select } from '@chakra-ui/react';
 import { NavLink, useParams } from 'react-router-dom';
-import ROUTES from '../../router/_routes';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import { selecetSneakersByID } from '../../store/product/selectors';
+import ROUTES from '../../router/_routes';
 import { fetchEditSneakerByID } from '../../store/product/asyncActions';
+import { selecetSneakersByID } from '../../store/product/selectors';
 const EditCard = () => {
   const { id } = useParams();
 
@@ -18,13 +18,15 @@ const EditCard = () => {
 
   const EditSneakerById = () => {
     const newEditSneaker = {
+      id,
       name,
       description,
       price,
-      category
+      category,
+      image
     };
 
-    dispatch(fetchEditSneakerByID({ newEditSneaker, id }));
+    dispatch(fetchEditSneakerByID(newEditSneaker));
   };
 
   return (
@@ -50,7 +52,7 @@ const EditCard = () => {
           </FormControl>
           <FormControl id="description">
             <FormLabel>Price</FormLabel>
-            <Input value={price} onChange={(e) => setPrice(e.target.value)} type="string" />
+            <Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" />
           </FormControl>
           <FormControl id="description">
             <FormLabel>Category</FormLabel>
@@ -67,7 +69,7 @@ const EditCard = () => {
           </FormControl>
           <FormControl id="description">
             <FormLabel>Image</FormLabel>
-            <Input type="file" />
+            <Input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
           </FormControl>
 
           <Stack spacing={10}>

@@ -1,36 +1,29 @@
 import { Button, FormControl, FormLabel, Input, Select, Stack, Textarea } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { FC, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { fetchAddSneaker } from '../../store/product/asyncActions';
-export const CreateProduct = () => {
+export const CreateProduct: FC = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [category, setCategory] = useState('');
   const [file, setFile] = useState('');
 
   const dispatch = useAppDispatch();
-
-  const addFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFile(e.target.files[0].name);
-    }
-  };
-
+  const navigate = useNavigate();
   const OnCreateNewSneaker = () => {
     const newSneaker = {
       name,
       description,
-      price: price,
+      price: price + '',
       category,
-      image_url:
-        'https://rundownmarketplace.com/media/catalog/product/cache/338761ca9ab59f63a51ce082c1ed9412/i/m/img_2641.jpg'
+      image_url: file
     };
     dispatch(fetchAddSneaker(newSneaker));
+    navigate(ROUTES.MAIN);
   };
-  console.log(file);
 
   return (
     <>
@@ -55,7 +48,7 @@ export const CreateProduct = () => {
           </FormControl>
           <FormControl id="description">
             <FormLabel>Price</FormLabel>
-            <Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" />
+            <Input value={price} onChange={(e) => setPrice(+e.target.value)} type="number" />
           </FormControl>
           <FormControl id="description">
             <Select
@@ -70,7 +63,7 @@ export const CreateProduct = () => {
           </FormControl>
           <FormControl id="description">
             <FormLabel>Image</FormLabel>
-            <Input onChange={addFile} type="file" />
+            <Input onChange={(e) => setFile(e.target.value)} />
           </FormControl>
 
           <Stack spacing={10}>

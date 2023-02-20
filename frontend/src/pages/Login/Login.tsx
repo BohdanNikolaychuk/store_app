@@ -6,8 +6,6 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormLabel,
   Heading,
   Input,
   InputGroup,
@@ -66,18 +64,15 @@ const Login: React.FC = () => {
                 Login
               </Heading>
             </Stack>
-            <Box rounded={'lg'} boxShadow={'lg'} p={8}>
+            <Box rounded={'lg'} p={8}>
               <Stack spacing={4}>
                 <Box>
-                  <FormControl isRequired>
-                    <FormLabel>User Name</FormLabel>
-                    <Input
-                      placeholder="User Name"
-                      type="text"
-                      {...register('username')}
-                      variant="filled"
-                    />
-                  </FormControl>
+                  <Input
+                    placeholder="User Name"
+                    type="text"
+                    {...register('username')}
+                    variant="filled"
+                  />
                 </Box>
                 {errors.username?.message && (
                   <Alert status="error">
@@ -86,24 +81,23 @@ const Login: React.FC = () => {
                     <AlertDescription>{errors.username?.message}</AlertDescription>
                   </Alert>
                 )}
-                <FormControl id="password" isRequired>
-                  <FormLabel>Password</FormLabel>
-                  <InputGroup>
-                    <Input
-                      {...register('password')}
-                      placeholder="Password"
-                      type={showPassword ? 'text' : 'password'}
-                      variant="filled"
-                    />
-                    <InputRightElement h={'full'}>
-                      <Button
-                        variant={'ghost'}
-                        onClick={() => setShowPassword((showPassword) => !showPassword)}>
-                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
+
+                <InputGroup>
+                  <Input
+                    {...register('password')}
+                    placeholder="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    variant="filled"
+                  />
+                  <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+
                 {errors.password?.message && (
                   <Alert status="error">
                     <AlertIcon />

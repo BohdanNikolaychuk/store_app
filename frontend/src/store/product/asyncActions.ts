@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../utils/axios';
-import { addSneaker, removeSneaker } from './slice';
+import { addSneaker, editSneaker, removeSneaker } from './slice';
 
 export const fetchAllSneakers = createAsyncThunk('sneakers/get', async () => {
   try {
@@ -37,7 +37,7 @@ export const fetchAddSneaker = createAsyncThunk(
   async (sneaker: NewSneaker, { dispatch }) => {
     try {
       const { data } = await axios.post('/store/products', sneaker);
-      console.log(data);
+
       dispatch(addSneaker(data));
       return data;
     } catch (err: any) {
@@ -47,22 +47,21 @@ export const fetchAddSneaker = createAsyncThunk(
 );
 
 type UpdateSneaker = {
-  name?: string | undefined;
-  description?: string | undefined;
-  price?: string | undefined;
-  category?: string | undefined;
+  id?: string;
+  name?: string;
+  description?: string;
+  price?: string;
+  category?: string;
+  image?: string;
 };
 
 export const fetchEditSneakerByID = createAsyncThunk(
   'sneaker/put',
-  async (
-    props: { newEditSneaker: UpdateSneaker; id: string | undefined },
-    { rejectWithValue, dispatch }
-  ) => {
-    const { newEditSneaker, id } = props;
-
+  async (props: UpdateSneaker, { rejectWithValue, dispatch }) => {
     try {
-      const data = await axios.put(`/store/products/${id}`, newEditSneaker);
+      const { data } = await axios.put(`/store/products/${props.id}`, { ...props });
+
+      dispatch(editSneaker(data));
     } catch (err: any) {
       console.log(err);
     }

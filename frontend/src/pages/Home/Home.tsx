@@ -10,11 +10,7 @@ const Home = () => {
   return (
     <>
       {user?.roles[0] === 'admin' &&
-        sneakers.map((element: ISneakers) => (
-          <>
-            <TableProduct {...element} />{' '}
-          </>
-        ))}
+        sneakers.map((element: ISneakers) => <TableProduct key={element._id} {...element} />)}
     </>
   );
 };

@@ -10,6 +10,7 @@ import {
   MenuList,
   Text
 } from '@chakra-ui/react';
+import { FC, memo } from 'react';
 
 import { BiShoppingBag } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
@@ -21,7 +22,7 @@ import { selectCartData } from '../../store/cart/selectors';
 import { selectAuthData } from '../../store/user/selectors';
 import { logout } from '../../store/user/slice';
 
-const Header = () => {
+const Header: FC = memo(() => {
   const { user, isAuth } = useAppSelector(selectAuthData);
   const { cart } = useAppSelector(selectCartData);
   const dispatch = useAppDispatch();
@@ -91,10 +92,10 @@ const Header = () => {
         </Flex>
       </Flex>
       {user?.roles[0] !== 'admin' && (
-        <HStack as={'nav'} spacing={4} display={{ md: 'flex' }} justifyContent="center">
+        <HStack as={'nav'} spacing={10} display={{ md: 'flex' }} justifyContent="center">
           {Links.map((link) => (
             <NavLink to={`${ROUTES.SHOP}?name=${link!.name}`} key={link!.name}>
-              <Button background={'inherit'} sx={{ borderRadius: '10px' }}>
+              <Button opacity="0.5" _hover={{ opacity: '1' }} background={'inherit'}>
                 {link!.icon === '' ? link!.name : link?.icon}
               </Button>
             </NavLink>
@@ -103,6 +104,6 @@ const Header = () => {
       )}
     </Box>
   );
-};
+});
 
 export default Header;
