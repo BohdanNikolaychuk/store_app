@@ -22,6 +22,8 @@ export class Product {
 
   @Prop()
   quantity: number;
+  @Prop()
+  size: Array<{ size: number }>;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

@@ -5,4 +5,5 @@ export class CreateProductDTO {
   category: string;
   image_url: string;
   quantity: number;
+  size: Array<{ size: number }>;
 }

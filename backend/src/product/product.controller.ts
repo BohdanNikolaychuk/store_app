@@ -37,7 +37,7 @@ export class ProductController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   async addProduct(@Body() body: CreateProductDTO) {
-    const { name, description, price, category, image_url } = body;
+    const { name, description, price, category, image_url, size } = body;
 
     const product = await this.productService.addProduct({
       name,
@@ -45,6 +45,7 @@ export class ProductController {
       price,
       category,
       image_url,
+      size,
       quantity: 0,
     });
 
