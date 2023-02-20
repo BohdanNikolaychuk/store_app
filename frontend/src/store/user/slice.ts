@@ -54,8 +54,8 @@ const authSlice = createSlice({
     });
 
     builder.addCase(getCurrentUser.rejected, (state, action) => {
-      state.error = action.payload as string;
       state.isAuth = null;
+      state.error = action.payload as string;
     });
   }
 });

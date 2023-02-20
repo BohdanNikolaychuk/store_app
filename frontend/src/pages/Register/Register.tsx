@@ -6,15 +6,12 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormLabel,
   Heading,
   Input,
   InputGroup,
   InputRightElement,
   Stack,
-  Text,
-  useColorModeValue
+  Text
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
@@ -55,58 +52,65 @@ const Register: React.FC = () => {
   };
 
   return (
-    <Container maxW="600px">
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'} textAlign={'center'}>
-              Sign up
-            </Heading>
-          </Stack>
-          <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} p={8}>
-            <Stack spacing={4}>
-              <Box>
-                <FormControl isRequired>
-                  <FormLabel>User Name</FormLabel>
+    <>
+      <Box bg="#f9f9f9" w="100%" p={4} color="white">
+        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
+          Create New Customer Account
+        </Text>
+      </Box>
+      <Container maxW="600px">
+        <Stack mt="40px" bg="#f7f7f7" spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack align={'center'}>
+              <Heading fontSize={'4xl'} textAlign={'center'}>
+                Sign up
+              </Heading>
+            </Stack>
+            <Box rounded={'lg'} p={8}>
+              <Stack spacing={4}>
+                <Box>
                   <Input
+                    border="none"
+                    rounded="none"
+                    bg="white"
                     {...register('username')}
                     placeholder="User Name"
                     type="text"
-                    variant="filled"
                   />
-                </FormControl>
-              </Box>
-              {errors.username?.message && (
-                <Alert status="error">
-                  <AlertIcon />
+                </Box>
+                {errors.username?.message && (
+                  <Alert status="error">
+                    <AlertIcon />
 
-                  <AlertDescription>{errors.username?.message}</AlertDescription>
-                </Alert>
-              )}
-              <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
+                    <AlertDescription>{errors.username?.message}</AlertDescription>
+                  </Alert>
+                )}
+
                 <Input
                   {...register('email')}
                   placeholder="Email address"
                   type="email"
-                  variant="filled"
+                  border="none"
+                  rounded="none"
+                  bg="white"
                 />
-              </FormControl>
-              {errors.email?.message && (
-                <Alert status="error">
-                  <AlertIcon />
 
-                  <AlertDescription>{errors.email?.message}</AlertDescription>
-                </Alert>
-              )}
-              <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
+                {errors.email?.message && (
+                  <Alert status="error">
+                    <AlertIcon />
+
+                    <AlertDescription>{errors.email?.message}</AlertDescription>
+                  </Alert>
+                )}
+
                 <InputGroup>
                   <Input
                     {...register('password')}
                     placeholder="Password"
                     type={showPassword ? 'text' : 'password'}
-                    variant="filled"
+                    border="none"
+                    rounded="none"
+                    bg="white"
                   />
                   <InputRightElement h={'full'}>
                     <Button
@@ -116,32 +120,43 @@ const Register: React.FC = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-              </FormControl>
-              {errors.password?.message && (
-                <Alert status="error">
-                  <AlertIcon />
 
-                  <AlertDescription>{errors.password?.message}</AlertDescription>
-                </Alert>
-              )}
-              <Stack pt={2}>
-                <Button type="submit" colorScheme="teal" mb={8}>
-                  Sign up
-                </Button>
+                {errors.password?.message && (
+                  <Alert status="error">
+                    <AlertIcon />
+
+                    <AlertDescription>{errors.password?.message}</AlertDescription>
+                  </Alert>
+                )}
+                <Stack pt={2}>
+                  <Button
+                    type="submit"
+                    rounded="none"
+                    _hover={{ background: 'gray' }}
+                    bg="#333333"
+                    mt="10"
+                    p="6">
+                    <Text color="white" textTransform="uppercase">
+                      Create an Account
+                    </Text>
+                  </Button>
+                </Stack>
+                <Stack>
+                  <Text align={'center'}>
+                    Already a user?{' '}
+                    <Text _hover={{ color: 'gray' }}>
+                      <NavLink to={ROUTES.LOGIN} color={'blue.400'}>
+                        Sign in
+                      </NavLink>
+                    </Text>
+                  </Text>
+                </Stack>
               </Stack>
-              <Stack>
-                <Text align={'center'}>
-                  Already a user?{' '}
-                  <NavLink to={ROUTES.LOGIN} color={'blue.400'}>
-                    Sign in
-                  </NavLink>
-                </Text>
-              </Stack>
-            </Stack>
-          </Box>
-        </form>
-      </Stack>
-    </Container>
+            </Box>
+          </form>
+        </Stack>
+      </Container>
+    </>
   );
 };
 

@@ -52,12 +52,10 @@ const Header: FC = memo(() => {
 
         <Flex alignItems={'center'}>
           {user?.roles[0] !== 'admin' && (
-            <ButtonGroup spacing="6">
-              <Button as={NavLink} to={ROUTES.CART} rounded={'30%'} background={'white'}>
-                {cart.length}
-                <BiShoppingBag size="25px" />
-              </Button>
-            </ButtonGroup>
+            <Button as={NavLink} to={ROUTES.CART} background="inherit">
+              {cart.length}
+              <BiShoppingBag size="25px" />
+            </Button>
           )}
           <Menu>
             <MenuButton
@@ -66,8 +64,10 @@ const Header: FC = memo(() => {
               rounded={'full'}
               variant={'link'}
               cursor={'pointer'}
-              _hover={{ textDecoration: 'none' }}>
-              <Button rounded={'30%'} as={NavLink} to={ROUTES.LOGIN} background={'white'}>
+              _active={{ opacity: '1' }}
+              opacity="0.5"
+              _hover={{ textDecoration: 'none', opacity: '1' }}>
+              <Button background={'inherit'} as={NavLink} to={ROUTES.LOGIN}>
                 <CgProfile color="black" size="25px" />
               </Button>
             </MenuButton>
@@ -94,7 +94,9 @@ const Header: FC = memo(() => {
       {user?.roles[0] !== 'admin' && (
         <HStack as={'nav'} spacing={10} display={{ md: 'flex' }} justifyContent="center">
           {Links.map((link) => (
-            <NavLink to={`${ROUTES.SHOP}?name=${link!.name}`} key={link!.name}>
+            <NavLink
+              to={link.name === 'Shop All' ? `${ROUTES.SHOP}` : `${ROUTES.SHOP}?name=${link!.name}`}
+              key={link!.name}>
               <Button opacity="0.5" _hover={{ opacity: '1' }} background={'inherit'}>
                 {link!.icon === '' ? link!.name : link?.icon}
               </Button>

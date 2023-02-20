@@ -56,8 +56,13 @@ const Login: React.FC = () => {
   }
   return (
     <>
+      <Box bg="#f9f9f9" w="100%" p={4} color="white">
+        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
+          LOGIN
+        </Text>
+      </Box>
       <Container maxW="600px">
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack mt="40px" bg="#f7f7f7" spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack align={'center'}>
               <Heading fontSize={'4xl'} textAlign={'center'}>
@@ -71,7 +76,9 @@ const Login: React.FC = () => {
                     placeholder="User Name"
                     type="text"
                     {...register('username')}
-                    variant="filled"
+                    border="none"
+                    rounded="none"
+                    bg="white"
                   />
                 </Box>
                 {errors.username?.message && (
@@ -87,7 +94,9 @@ const Login: React.FC = () => {
                     {...register('password')}
                     placeholder="Password"
                     type={showPassword ? 'text' : 'password'}
-                    variant="filled"
+                    border="none"
+                    rounded="none"
+                    bg="white"
                   />
                   <InputRightElement h={'full'}>
                     <Button
@@ -106,8 +115,16 @@ const Login: React.FC = () => {
                   </Alert>
                 )}
                 <Stack pt={2}>
-                  <Button type="submit" colorScheme="teal" mb={8}>
-                    Log In
+                  <Button
+                    type="submit"
+                    rounded="none"
+                    _hover={{ background: 'gray' }}
+                    bg="#333333"
+                    mt="10"
+                    p="6">
+                    <Text color="white" textTransform="uppercase">
+                      Log In
+                    </Text>
                   </Button>
                 </Stack>
                 <Stack>

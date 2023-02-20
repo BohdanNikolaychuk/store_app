@@ -18,7 +18,7 @@ const Shop = () => {
   }
 
   const filterSnaker = sneakers.filter((element) => {
-    if (searchParams.get('name') === 'Shop All') {
+    if (!searchParams.get('name')) {
       return sneakers;
     }
     return element.category === searchParams.get('name');
@@ -27,25 +27,40 @@ const Shop = () => {
   return (
     <>
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
-        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
-          {searchParams.get('name')}
-        </Text>
-
-        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
-          <NavLink to={ROUTES.MAIN}>Shop/</NavLink>
-          {searchParams.get('name')}
-        </Text>
+        {!searchParams.get('name') ? (
+          <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
+            Shop All
+          </Text>
+        ) : (
+          <>
+            <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
+              {searchParams.get('name')}
+            </Text>
+            <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
+              <NavLink to={ROUTES.SHOP}>
+                <Text opacity={'0.5'}>Shop/</Text>
+              </NavLink>
+              {searchParams.get('name')}
+            </Text>
+          </>
+        )}
+        )
       </Box>
       <Container maxW="1200px">
-        <SimpleGrid columns={3}>
-          {filterSnaker.map((element: ISneakers) => (
-            <NavLink
-              key={element._id}
-              to={user?.roles[0] === 'admin' ? '' : `${ROUTES.PRODUCTBYID(element._id)}`}>
-              <CardView {...element} />
-            </NavLink>
-          ))}
-        </SimpleGrid>
+        <Box display="flex">
+          <Box w="30%">
+            <Text>Shop By</Text>
+          </Box>
+          <SimpleGrid w="100%" columns={3}>
+            {filterSnaker.map((element: ISneakers) => (
+              <NavLink
+                key={element._id}
+                to={user?.roles[0] === 'admin' ? '' : `${ROUTES.PRODUCTBYID(element._id)}`}>
+                <CardView {...element} />
+              </NavLink>
+            ))}
+          </SimpleGrid>
+        </Box>
       </Container>
     </>
   );

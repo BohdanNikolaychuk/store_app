@@ -10,15 +10,28 @@ export const CreateProduct: FC = () => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState('');
   const [file, setFile] = useState('');
-
+  const [size, setSize] = useState<Array<{ size: string }>>([]);
+  const [sizeField, setSizeField] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const onSizeField = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSizeField(e.target.value);
+  };
+
+  const onCreateSize = () => {
+    setSize([{ size: sizeField }, ...size]);
+
+    setSizeField('');
+  };
+
   const OnCreateNewSneaker = () => {
     const newSneaker = {
       name,
       description,
       price: price + '',
       category,
+      size,
       image_url: file
     };
     dispatch(fetchAddSneaker(newSneaker));
@@ -35,7 +48,12 @@ export const CreateProduct: FC = () => {
         <Stack spacing={4}>
           <FormControl id="name">
             <FormLabel>Name</FormLabel>
-            <Input value={name} onChange={(e) => setName(e.target.value)} type="text" />
+            <Input
+              placeholder="Here is a sample Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+            />
           </FormControl>
           <FormControl id="description">
             <FormLabel>Description</FormLabel>
@@ -43,13 +61,28 @@ export const CreateProduct: FC = () => {
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Here is a sample placeholder"
+              placeholder="Here is a sample description"
             />
           </FormControl>
           <FormControl id="description">
             <FormLabel>Price</FormLabel>
-            <Input value={price} onChange={(e) => setPrice(+e.target.value)} type="number" />
+            <Input
+              value={price}
+              onChange={(e) => setPrice(+e.target.value)}
+              placeholder="Enter price"
+              type="number"
+            />
           </FormControl>
+          <FormControl id="size">
+            <FormLabel>Size</FormLabel>
+            <Input onChange={(e) => onSizeField(e)} placeholder="Enter size" type="number" />
+            <Button onClick={() => onCreateSize()}>Create Size</Button>
+          </FormControl>
+          <Select>
+            {size.map((element: any, i) => (
+              <option key={i}>{element.size}</option>
+            ))}
+          </Select>
           <FormControl id="description">
             <Select
               onChange={(e) => setCategory(e.target.value)}
@@ -61,7 +94,7 @@ export const CreateProduct: FC = () => {
               <option value="Air Jordan">Air Jordan</option>
             </Select>
           </FormControl>
-          <FormControl id="description">
+          <FormControl id="image">
             <FormLabel>Image</FormLabel>
             <Input onChange={(e) => setFile(e.target.value)} />
           </FormControl>
@@ -69,11 +102,12 @@ export const CreateProduct: FC = () => {
           <Stack spacing={10}>
             <Button
               onClick={() => OnCreateNewSneaker()}
-              bg={'blue.400'}
-              color={'white'}
-              _hover={{
-                bg: 'blue.500'
-              }}>
+              rounded="none"
+              _hover={{ background: 'gray' }}
+              bg="#333333"
+              mt="10"
+              p="6"
+              color="white">
               Create
             </Button>
           </Stack>

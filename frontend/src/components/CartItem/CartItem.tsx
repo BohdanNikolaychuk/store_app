@@ -1,4 +1,4 @@
-import { Box, Button, CloseButton, Flex, Link } from '@chakra-ui/react';
+import { Button, CloseButton, Flex, Link } from '@chakra-ui/react';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import { decrementQuantity, incrementQuantity, removeItem } from '../../store/cart/slice';
 import { ISneakers } from '../../store/product/types';
@@ -26,11 +26,15 @@ export const CartItem = ({ _id, name, quantity, image_url, price, size }: ISneak
         <PriceTag price={price!} />
 
         <Flex alignItems={'center'}>
-          <Button onClick={() => onDecrement(_id!)}>-</Button>
-          <Box mr="5" ml="5">
+          <Button rounded="none" p="4" bg="#f7f7f7" onClick={() => onDecrement(_id!)}>
+            -
+          </Button>
+          <Button _hover={{ background: '#f7f7f7' }} rounded="none" bg="#f7f7f7" p="4">
             {quantity}
-          </Box>
-          <Button onClick={() => onIncrement(_id!)}>+</Button>
+          </Button>
+          <Button rounded="none" bg="#f7f7f7" onClick={() => onIncrement(_id!)}>
+            +
+          </Button>
         </Flex>
 
         <CloseButton aria-label={`Delete ${name} from cart`} onClick={() => deleteFromCart()} />

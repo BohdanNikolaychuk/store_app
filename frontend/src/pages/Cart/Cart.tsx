@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
+
 import { CartItem } from '../../components/CartItem/CartItem';
 import { CartOrderSummary } from '../../components/CartOrderSummary/CartOrderSummary';
-
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectCartData } from '../../store/cart/selectors';
 import { ISneakers } from '../../store/product/types';

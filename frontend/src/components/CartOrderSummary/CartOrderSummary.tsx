@@ -1,5 +1,4 @@
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
-import { FaArrowRight } from 'react-icons/fa';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectCartData } from '../../store/cart/selectors';
 
@@ -10,7 +9,7 @@ export const CartOrderSummary = () => {
     let totalPrice = 0;
     cart.forEach((item) => {
       totalQuantity += item.quantity;
-      totalPrice += item.price * item.quantity;
+      totalPrice += +item.price * item.quantity;
     });
     return { totalPrice, totalQuantity };
   };
@@ -27,8 +26,11 @@ export const CartOrderSummary = () => {
           </Text>
         </Flex>
       </Stack>
-      <Button colorScheme="teal" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
-        Checkout
+
+      <Button rounded="none" _hover={{ background: 'gray' }} bg="#333333" mt="10" p="6">
+        <Text color="white" textTransform="uppercase">
+          Checkout
+        </Text>
       </Button>
     </Stack>
   );
