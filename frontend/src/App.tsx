@@ -13,9 +13,11 @@ function App() {
     if (localStorage.getItem('userToken')) {
       dispatch(getCurrentUser());
     }
-
-    dispatch(fetchAllSneakers());
   }, [dispatch, localStorage.getItem('userToken')]);
+
+  useEffect(() => {
+    dispatch(fetchAllSneakers());
+  }, []);
 
   return <RouterProvider router={router}></RouterProvider>;
 }

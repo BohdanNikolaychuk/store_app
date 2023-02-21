@@ -25,6 +25,17 @@ export const CreateProduct: FC = () => {
     setSizeField('');
   };
 
+  const onSetFile = (e: any) => {
+    const file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    // on reader load somthing...
+    reader.onload = () => {
+      setFile(reader.result as string);
+    };
+  };
+
   const OnCreateNewSneaker = () => {
     const newSneaker = {
       name,
@@ -96,7 +107,7 @@ export const CreateProduct: FC = () => {
           </FormControl>
           <FormControl id="image">
             <FormLabel>Image</FormLabel>
-            <Input onChange={(e) => setFile(e.target.value)} />
+            <Input type="file" onChange={(e) => onSetFile(e)} />
           </FormControl>
 
           <Stack spacing={10}>

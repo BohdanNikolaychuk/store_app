@@ -1,5 +1,6 @@
 import {
   Alert,
+  AlertDescription,
   AlertIcon,
   Box,
   Button,
@@ -10,9 +11,10 @@ import {
   Select,
   Stack,
   StackDivider,
-  Text
+  Text,
+  useDisclosure
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { NavLink, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
@@ -21,28 +23,34 @@ import { addToCart } from '../../store/cart/slice';
 import { selecetSneakersByID } from '../../store/product/selectors';
 const Info = () => {
   const { id } = useParams();
-
+  const { isOpen: isVisible, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
   const dispatch = useAppDispatch();
-  console.log();
 
   const [SelectSize, setSize] = useState('');
+  const [error, setError] = useState('');
+  const onSelectSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSize(e.target.value);
+  };
 
   const onAddToCart = () => {
     const AddSneakerToCart = {
       ...sneakerByID,
       size: SelectSize
     };
+    if (!SelectSize) {
+      setError('Choose Size');
+      setTimeout(() => {
+        setError('');
+        onClose();
+      }, 2500);
+    }
+    const onAddTo = dispatch(addToCart(AddSneakerToCart));
 
-    dispatch(addToCart(AddSneakerToCart));
-    return (
-      <>
-        <Alert status="success">
-          <AlertIcon />
-          Data uploaded to the server. Fire on!
-        </Alert>
-      </>
-    );
+    if (onAddTo.payload) {
+      onOpen();
+      setTimeout(() => onClose(), 2500);
+    }
   };
 
   return (
@@ -50,10 +58,14 @@ const Info = () => {
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
         <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
           <NavLink to={ROUTES.SHOP}>
-            <Text opacity={'0.5'}>Shop / </Text>
+            <Text opacity={'0.5'} _hover={{ color: 'red' }}>
+              Shop /{' '}
+            </Text>
           </NavLink>
           <NavLink to={ROUTES.SHOP + `?name=${sneakerByID?.category}`}>
-            <Text opacity={'0.5'}> {sneakerByID?.category} /</Text>
+            <Text opacity={'0.5'} _hover={{ color: 'red' }}>
+              {sneakerByID?.category}/
+            </Text>
           </NavLink>
           <NavLink to={ROUTES.SHOP + `?name=${sneakerByID?.category}`}>
             <Text> {sneakerByID?.name}</Text>
@@ -61,10 +73,34 @@ const Info = () => {
         </Text>
       </Box>
       <Container maxW={'1200px'}>
-        <Flex mt="20" justifyContent="space-between">
-          <Image src={sneakerByID?.image_url} borderRadius="full" />
+        {isVisible && error === '' && (
+          <Alert status="success">
+            <AlertIcon />
+            <Box display="flex" justifyContent="center">
+              <AlertDescription>
+                You added {sneakerByID?.name} to your
+                <NavLink to={ROUTES.CART}>shopping cart.</NavLink>
+              </AlertDescription>
+            </Box>
+          </Alert>
+        )}
 
-          <Box w={'50%'}>
+        {error && (
+          <Alert status="error">
+            <AlertIcon />
+
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        <Flex
+          mt="20"
+          display={{ md: 'block', xl: 'flex' }}
+          justifyContent={{ xl: 'space-between' }}
+          margin={{ md: '0 auto' }}>
+          <Image h="auto" maxW="100%" src={sneakerByID?.image_url} />
+
+          <Box mt="4">
             <Heading color="#696969">{sneakerByID?.name}</Heading>
 
             <Stack divider={<StackDivider />} spacing="4">
@@ -75,7 +111,7 @@ const Info = () => {
                 <Text pt="20px" fontSize="xl">
                   Size
                 </Text>
-                <Select onChange={(e) => setSize(e.target.value)} placeholder="Select option">
+                <Select onChange={onSelectSize} placeholder="Select option">
                   {sneakerByID?.size?.map((element: any) => (
                     <option key={element.size}>{element.size}</option>
                   ))}

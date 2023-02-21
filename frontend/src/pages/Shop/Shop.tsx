@@ -38,7 +38,9 @@ const Shop = () => {
             </Text>
             <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
               <NavLink to={ROUTES.SHOP}>
-                <Text opacity={'0.5'}>Shop/</Text>
+                <Text opacity={'0.5'} _hover={{ color: 'red' }}>
+                  Shop/
+                </Text>
               </NavLink>
               {searchParams.get('name')}
             </Text>
@@ -48,10 +50,7 @@ const Shop = () => {
       </Box>
       <Container maxW="1200px">
         <Box display="flex">
-          <Box w="30%">
-            <Text>Shop By</Text>
-          </Box>
-          <SimpleGrid w="100%" columns={3}>
+          <SimpleGrid w="100%" columns={[1, 2, 3]}>
             {filterSnaker.map((element: ISneakers) => (
               <NavLink
                 key={element._id}
