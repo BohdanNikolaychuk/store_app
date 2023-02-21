@@ -5,7 +5,7 @@ import { ISneakers } from '../../store/product/types';
 import { CartProductMeta } from '../CartProductMeta/CartProductMeta';
 import { PriceTag } from '../PriceTag/PriceTag';
 
-export const CartItem = ({ _id, name, quantity, image_url, price, size }: ISneakers) => {
+export const CartItem = ({ _id, name, quantity, image_url, price, SelectSize }: ISneakers) => {
   const dispatch = useAppDispatch();
   const deleteFromCart = () => {
     dispatch(removeItem(_id));
@@ -20,7 +20,7 @@ export const CartItem = ({ _id, name, quantity, image_url, price, size }: ISneak
 
   return (
     <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" align="center">
-      <CartProductMeta name={name!} size={size!} image={image_url!} />
+      <CartProductMeta name={name!} size={SelectSize!} image={image_url!} />
 
       <Flex width="full" justify="space-between" display={{ base: 'none', md: 'flex' }}>
         <PriceTag price={price!} />

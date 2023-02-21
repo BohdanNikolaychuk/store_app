@@ -13,4 +13,5 @@ export interface ISneakers {
   image_url: string;
   quantity: number;
   size?: Array<{ size: string }>;
+  SelectSize: string;
 }
