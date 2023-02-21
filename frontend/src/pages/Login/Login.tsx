@@ -52,7 +52,7 @@ const Login: React.FC = () => {
     dispatch(userLogin(UserData));
   };
   if (isAuth) {
-    navigate(ROUTES.SHOP);
+    navigate(ROUTES.MAIN);
   }
   return (
     <>

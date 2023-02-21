@@ -36,7 +36,7 @@ const Info = () => {
   const onAddToCart = () => {
     const AddSneakerToCart = {
       ...sneakerByID,
-      size: SelectSize
+      SelectSize
     };
     if (!SelectSize) {
       setError('Choose Size');
