@@ -1,4 +1,4 @@
-import { Box, Center, Heading, Image, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Center, Heading, Image, Stack, Text } from '@chakra-ui/react';
 
 import { ISneakers } from '../../store/product/types';
 
@@ -11,7 +11,6 @@ const CardView = ({ _id, name, price, category, image_url }: ISneakers) => {
           role={'group'}
           maxW={'330px'}
           w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
           rounded={'lg'}
           pos={'relative'}
           zIndex={1}>

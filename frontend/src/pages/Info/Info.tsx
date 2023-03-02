@@ -3,6 +3,9 @@ import {
   AlertDescription,
   AlertIcon,
   Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
   Button,
   Container,
   Flex,
@@ -15,7 +18,6 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-
 import { NavLink, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
@@ -44,11 +46,9 @@ const Info = () => {
         setError('');
         onClose();
       }, 2500);
-    }
-    const onAddTo = dispatch(addToCart(AddSneakerToCart));
-
-    if (onAddTo.payload) {
+    } else {
       onOpen();
+      dispatch(addToCart(AddSneakerToCart));
       setTimeout(() => onClose(), 2500);
     }
   };
@@ -56,21 +56,29 @@ const Info = () => {
   return (
     <>
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
-        <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
-          <NavLink to={ROUTES.SHOP}>
-            <Text opacity={'0.5'} _hover={{ color: 'red' }}>
-              Shop /{' '}
-            </Text>
-          </NavLink>
-          <NavLink to={ROUTES.SHOP + `?name=${sneakerByID?.category}`}>
-            <Text opacity={'0.5'} _hover={{ color: 'red' }}>
-              {sneakerByID?.category}/
-            </Text>
-          </NavLink>
-          <NavLink to={ROUTES.SHOP + `?name=${sneakerByID?.category}`}>
-            <Text> {sneakerByID?.name}</Text>
-          </NavLink>
-        </Text>
+        <Breadcrumb color="black" pt="2" pb="2" display="flex" justifyContent="center">
+          <BreadcrumbItem>
+            <BreadcrumbLink opacity={'0.5'} _hover={{ color: 'red' }} as={NavLink} to={ROUTES.SHOP}>
+              Shop
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <BreadcrumbLink
+              opacity={'0.5'}
+              _hover={{ color: 'red' }}
+              to={ROUTES.SHOP + `?name=${sneakerByID?.category}`}
+              as={NavLink}>
+              {sneakerByID?.category}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem isCurrentPage>
+            <BreadcrumbLink>
+              <Text overflow="hidden" textOverflow="ellipsis">
+                {sneakerByID?.name}{' '}
+              </Text>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
       </Box>
       <Container maxW={'1200px'}>
         {isVisible && error === '' && (
@@ -111,7 +119,12 @@ const Info = () => {
                 <Text pt="20px" fontSize="xl">
                   Size
                 </Text>
-                <Select onChange={onSelectSize} placeholder="Select option">
+                <Select
+                  border="none"
+                  rounded="none"
+                  bg="#f7f7f7"
+                  onChange={onSelectSize}
+                  placeholder="Select option">
                   {sneakerByID?.size?.map((element: any) => (
                     <option key={element.size}>{element.size}</option>
                   ))}

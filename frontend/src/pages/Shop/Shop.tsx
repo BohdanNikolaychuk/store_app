@@ -1,4 +1,12 @@
-import { Box, Container, SimpleGrid, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Container,
+  SimpleGrid,
+  Text
+} from '@chakra-ui/react';
 
 import CardView from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
@@ -28,7 +36,14 @@ const Shop = () => {
     <>
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
         {!searchParams.get('name') ? (
-          <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
+          <Text
+            variant={'h1'}
+            pt="2"
+            pb="2"
+            color="black"
+            display="flex"
+            justifyContent="center"
+            fontSize="4xl">
             Shop All
           </Text>
         ) : (
@@ -37,12 +52,20 @@ const Shop = () => {
               {searchParams.get('name')}
             </Text>
             <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
-              <NavLink to={ROUTES.SHOP}>
-                <Text opacity={'0.5'} _hover={{ color: 'red' }}>
-                  Shop/
-                </Text>
-              </NavLink>
-              {searchParams.get('name')}
+              <Breadcrumb>
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    opacity={'0.5'}
+                    _hover={{ color: 'red' }}
+                    as={NavLink}
+                    to={ROUTES.SHOP}>
+                    Shop
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbItem isCurrentPage>
+                  <BreadcrumbLink>{searchParams.get('name')!}</BreadcrumbLink>
+                </BreadcrumbItem>
+              </Breadcrumb>
             </Text>
           </>
         )}

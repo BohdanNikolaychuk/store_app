@@ -9,11 +9,15 @@ const EditCard = () => {
   const { id } = useParams();
 
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
+  console.log(sneakerByID);
+
   const dispatch = useAppDispatch();
   const [name, setName] = useState(() => id && sneakerByID?.name);
   const [description, setDescription] = useState(() => id && sneakerByID?.description);
   const [price, setPrice] = useState(() => id && sneakerByID?.price);
   const [category, setCategory] = useState(() => id && sneakerByID?.category);
+
+  const [size, setSize] = useState(() => id && sneakerByID?.size);
   const [image, setImage] = useState(() => id && sneakerByID?.image_url);
 
   const EditSneakerById = () => {
@@ -51,6 +55,14 @@ const EditCard = () => {
             />
           </FormControl>
           <FormControl id="description">
+            <FormLabel>Size</FormLabel>
+            <Select variant="unstyled">
+              {/* {size?.map((element: any) => (
+                <option key={element.size}>{element.size}</option>
+              ))} */}
+            </Select>
+          </FormControl>
+          <FormControl id="description">
             <FormLabel>Price</FormLabel>
             <Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" />
           </FormControl>
@@ -67,6 +79,7 @@ const EditCard = () => {
               <option value="Air Jordan">Air Jordan</option>
             </Select>
           </FormControl>
+
           <FormControl id="description">
             <FormLabel>Image</FormLabel>
             <Input type="text" value={image} onChange={(e) => setImage(e.target.value)} />

@@ -52,10 +52,19 @@ const Header: FC = memo(() => {
 
         <Flex alignItems={'center'}>
           {user?.roles[0] !== 'admin' && (
-            <Button as={NavLink} to={ROUTES.CART} background="inherit">
-              {cart.length}
-              <BiShoppingBag size="25px" />
-            </Button>
+            <>
+              <Button
+                rounded="none"
+                cursor={'pointer'}
+                _hover={{ textDecoration: 'none', opacity: '1' }}
+                opacity={cart.length !== 0 ? '1' : '0.5'}
+                as={NavLink}
+                to={ROUTES.CART}
+                background="inherit">
+                <Text as="b">{cart.length}</Text>
+                <BiShoppingBag size="25px" />
+              </Button>
+            </>
           )}
           <Menu>
             <MenuButton
@@ -65,7 +74,7 @@ const Header: FC = memo(() => {
               variant={'link'}
               cursor={'pointer'}
               _active={{ opacity: '1' }}
-              opacity="0.5"
+              opacity={isAuth ? '1' : '0.5'}
               _hover={{ textDecoration: 'none', opacity: '1' }}>
               <Button background={'inherit'} as={NavLink} to={ROUTES.LOGIN}>
                 <CgProfile color="black" size="25px" />

@@ -28,7 +28,6 @@ const Home = () => {
 
   return (
     <>
-      <></>
       {user?.roles[0] === 'admin' && (
         <Input placeholder="Filter by id or name" onChange={(e) => setFilter(e.target.value)} />
       )}
