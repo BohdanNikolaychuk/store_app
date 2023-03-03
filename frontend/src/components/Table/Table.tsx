@@ -6,7 +6,8 @@ import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 import { ISneakers } from '../../store/product/types';
-const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
+
+export const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -35,5 +36,3 @@ const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
     </>
   );
 };
-
-export default TableProduct;

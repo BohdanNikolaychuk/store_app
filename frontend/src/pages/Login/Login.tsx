@@ -23,10 +23,10 @@ import * as Yup from 'yup';
 import { ILogin } from '../../@types/IAuth.interface';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
-import { selectAuthData } from '../../store/user/selectors';
 
-const Login: React.FC = () => {
-  const { isAuth } = useAppSelector(selectAuthData);
+export const Login: React.FC = () => {
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -51,9 +51,11 @@ const Login: React.FC = () => {
   const onSubmit = async (UserData: ILogin) => {
     dispatch(userLogin(UserData));
   };
+
   if (isAuth) {
     navigate(ROUTES.MAIN);
   }
+
   return (
     <>
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
@@ -143,5 +145,3 @@ const Login: React.FC = () => {
     </>
   );
 };
-
-export default Login;

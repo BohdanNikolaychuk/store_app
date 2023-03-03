@@ -1,7 +1,6 @@
 export interface State {
   sneakers: ISneakers[];
-  loading: null | boolean;
-  error: null | string;
+  status: 'init' | 'loading' | 'error' | 'success';
 }
 
 export interface ISneakers {

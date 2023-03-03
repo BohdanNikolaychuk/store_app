@@ -1,6 +1,6 @@
-import Adidas from '../components/Svg/Adidas';
-import Jordan from '../components/Svg/Jordan';
-import Nike from '../components/Svg/Nike';
+import { Adidas } from '../components/Svg/Adidas';
+import { Jordan } from '../components/Svg/Jordan';
+import { Nike } from '../components/Svg/Nike';
 
 const Links = [
   {

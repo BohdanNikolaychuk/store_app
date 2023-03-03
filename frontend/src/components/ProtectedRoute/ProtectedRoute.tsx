@@ -1,12 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
-import { selectAuthData } from '../../store/user/selectors';
 
 export const ProtectedRoute = ({ children }: any) => {
-  const { user, isAuth } = useAppSelector(selectAuthData);
+  const user = useAppSelector((state) => state.auth.user);
 
-  if (user?.roles[0] !== 'admin') {
+  if (!user?.roles.includes('admin')) {
     return <Navigate to={ROUTES.MAIN} replace />;
   }
 

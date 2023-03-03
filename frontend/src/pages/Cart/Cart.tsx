@@ -5,7 +5,7 @@ import { CartOrderSummary } from '../../components/CartOrderSummary/CartOrderSum
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectCartData } from '../../store/cart/selectors';
 import { ISneakers } from '../../store/product/types';
-const Cart = () => {
+export const Cart = () => {
   const { cart } = useAppSelector(selectCartData);
 
   return (
@@ -40,5 +40,3 @@ const Cart = () => {
     </>
   );
 };
-
-export default Cart;

@@ -1,16 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
+import { Layout } from '../components/Layout/Layout';
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
-import PublicRoute from '../components/PublicRoute/PublicRoute';
+import { PublicRoute } from '../components/PublicRoute/PublicRoute';
+import { Admin } from '../pages/Admin/Admin';
 
-import Cart from '../pages/Cart/Cart';
+import { Cart } from '../pages/Cart/Cart';
 import { CreateProduct } from '../pages/CreateProduct/CreateProduct';
-import EditCard from '../pages/EditCard/EditCard';
-import Home from '../pages/Home/Home';
-import Info from '../pages/Info/Info';
-import Login from '../pages/Login/Login';
-import Register from '../pages/Register/Register';
-import Shop from '../pages/Shop/Shop';
+import { EditCard } from '../pages/EditCard/EditCard';
+import { Home } from '../pages/Home/Home';
+import { Info } from '../pages/Info/Info';
+import { Login } from '../pages/Login/Login';
+import { Register } from '../pages/Register/Register';
+import { Shop } from '../pages/Shop/Shop';
 import ROUTES from './_routes';
 
 const router = createBrowserRouter([
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         path: ROUTES.EDITBYID()
+      },
+      {
+        element: (
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        ),
+        path: ROUTES.ADMIN
       },
       {
         element: <Shop />,

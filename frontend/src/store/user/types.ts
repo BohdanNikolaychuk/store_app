@@ -1,6 +1,6 @@
 export interface State {
   isAuth: null | boolean;
-  user: IUser;
+  user: null | IUser;
   loading: null | boolean;
   token: null | string;
   error: null | string;

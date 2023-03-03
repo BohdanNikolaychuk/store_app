@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Flex,
   HStack,
   Menu,
@@ -18,16 +17,39 @@ import { NavLink } from 'react-router-dom';
 import Links from '../../common/Links';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
-import { selectCartData } from '../../store/cart/selectors';
-import { selectAuthData } from '../../store/user/selectors';
+
 import { logout } from '../../store/user/slice';
 
-const Header: FC = memo(() => {
-  const { user, isAuth } = useAppSelector(selectAuthData);
-  const { cart } = useAppSelector(selectCartData);
+export const Header: FC = memo(() => {
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const user = useAppSelector((state) => state.auth.user);
+  const cart = useAppSelector((state) => state.cart.cart);
+
   const dispatch = useAppDispatch();
   const LogOut = () => {
     dispatch(logout());
+  };
+
+  const RenderMenuListButton = () => {
+    if (isAuth !== null) {
+      return (
+        <>
+          <MenuItem>Hello,{user?.username}</MenuItem>
+          <Button onClick={LogOut}>Logout</Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <MenuItem as={NavLink} to="login">
+            Login
+          </MenuItem>
+          <MenuItem as={NavLink} to="register">
+            Register
+          </MenuItem>
+        </>
+      );
+    }
   };
 
   return (
@@ -38,34 +60,18 @@ const Header: FC = memo(() => {
             Sneaker
           </Text>
         </HStack>
-        {user?.roles[0] === 'admin' && (
-          <>
-            <ButtonGroup variant="link" spacing="8">
-              {[{ name: 'Create new product', to: ROUTES.FORM_CREATE }].map((item) => (
-                <Button as={NavLink} to={item.to} key={item.name}>
-                  {item.name}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </>
-        )}
-
         <Flex alignItems={'center'}>
-          {user?.roles[0] !== 'admin' && (
-            <>
-              <Button
-                rounded="none"
-                cursor={'pointer'}
-                _hover={{ textDecoration: 'none', opacity: '1' }}
-                opacity={cart.length !== 0 ? '1' : '0.5'}
-                as={NavLink}
-                to={ROUTES.CART}
-                background="inherit">
-                <Text as="b">{cart.length}</Text>
-                <BiShoppingBag size="25px" />
-              </Button>
-            </>
-          )}
+          <Button
+            rounded="none"
+            cursor={'pointer'}
+            _hover={{ textDecoration: 'none', opacity: '1' }}
+            opacity={cart.length !== 0 ? '1' : '0.5'}
+            as={NavLink}
+            to={ROUTES.CART}
+            background="inherit">
+            <Text as="b">{cart.length}</Text>
+            <BiShoppingBag size="25px" />
+          </Button>
           <Menu>
             <MenuButton
               as={Button}
@@ -81,26 +87,18 @@ const Header: FC = memo(() => {
               </Button>
             </MenuButton>
             <MenuList fontSize={17} zIndex={5555}>
-              {isAuth === !null ? (
-                <>
-                  <MenuItem>Hello,{user?.username}</MenuItem>
-                  <Button onClick={LogOut}>Logout</Button>
-                </>
-              ) : (
-                <>
-                  <MenuItem as={NavLink} to="login">
-                    Login
-                  </MenuItem>
-                  <MenuItem as={NavLink} to="register">
-                    Register
-                  </MenuItem>
-                </>
-              )}
+              {RenderMenuListButton()}
             </MenuList>
           </Menu>
         </Flex>
       </Flex>
-      {user?.roles[0] !== 'admin' && (
+      {user?.roles[0] === 'admin' ? (
+        <>
+          <Button as={NavLink} to={ROUTES.FORM_CREATE}>
+            Create new product
+          </Button>
+        </>
+      ) : (
         <HStack as={'nav'} spacing={10} display={{ md: 'flex' }} justifyContent="center">
           {Links.map((link) => (
             <NavLink
@@ -116,5 +114,3 @@ const Header: FC = memo(() => {
     </Box>
   );
 });
-
-export default Header;

@@ -1,11 +1,12 @@
-import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import auth from './user/slice';
-import sneakers from './product/slice';
+import { combineReducers } from 'redux';
 import cart from './cart/slice';
+import { SneakerReducer } from './product/slice';
+import auth from './user/slice';
+
 const rootReducer = combineReducers({
   auth,
-  sneakers,
+  sneakers: SneakerReducer,
   cart
 });
 

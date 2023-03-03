@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Jordan = () => {
+export const Jordan = () => {
   return (
     <>
       <svg
@@ -17,5 +15,3 @@ const Jordan = () => {
     </>
   );
 };
-
-export default Jordan;

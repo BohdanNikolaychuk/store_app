@@ -23,7 +23,7 @@ import { IRegistration } from '../../@types/IAuth.interface';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { registerUser } from '../../store/user/asyncActions';
-const Register: React.FC = () => {
+export const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -159,5 +159,3 @@ const Register: React.FC = () => {
     </>
   );
 };
-
-export default Register;

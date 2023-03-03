@@ -8,20 +8,19 @@ import {
   Text
 } from '@chakra-ui/react';
 
-import CardView from '../../components/Card/Card';
+import { CardView } from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
 
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
-import { selectSneakersData } from '../../store/product/selectors';
 import { ISneakers } from '../../store/product/types';
-import { selectAuthData } from '../../store/user/selectors';
-const Shop = () => {
-  const { sneakers, loading } = useAppSelector(selectSneakersData);
-  const { user } = useAppSelector(selectAuthData);
+export const Shop = () => {
+  const sneakers = useAppSelector((state) => state.sneakers.sneakers);
+  const status = useAppSelector((state) => state.sneakers.status);
+  const user = useAppSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
 
-  if (loading) {
+  if (status === 'init' || status === 'loading') {
     return <>Loading</>;
   }
 
@@ -87,5 +86,3 @@ const Shop = () => {
     </>
   );
 };
-
-export default Shop;

@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Adidas = () => {
+export const Adidas = () => {
   return (
     <>
       <svg
@@ -25,5 +23,3 @@ const Adidas = () => {
     </>
   );
 };
-
-export default Adidas;

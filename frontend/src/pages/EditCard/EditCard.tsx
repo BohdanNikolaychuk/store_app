@@ -5,11 +5,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { fetchEditSneakerByID } from '../../store/product/asyncActions';
 import { selecetSneakersByID } from '../../store/product/selectors';
-const EditCard = () => {
+export const EditCard = () => {
   const { id } = useParams();
 
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
-  console.log(sneakerByID);
 
   const dispatch = useAppDispatch();
   const [name, setName] = useState(() => id && sneakerByID?.name);
@@ -101,5 +100,3 @@ const EditCard = () => {
     </>
   );
 };
-
-export default EditCard;

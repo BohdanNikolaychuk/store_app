@@ -7,6 +7,7 @@ import { PriceTag } from '../PriceTag/PriceTag';
 
 export const CartItem = ({ _id, name, quantity, image_url, price, SelectSize }: ISneakers) => {
   const dispatch = useAppDispatch();
+
   const deleteFromCart = () => {
     dispatch(removeItem(_id));
   };

@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { addToCart } from '../../store/cart/slice';
 import { selecetSneakersByID } from '../../store/product/selectors';
-const Info = () => {
+export const Info = () => {
   const { id } = useParams();
   const { isOpen: isVisible, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   const sneakerByID = useAppSelector(selecetSneakersByID(id!));
@@ -148,5 +148,3 @@ const Info = () => {
     </>
   );
 };
-
-export default Info;
