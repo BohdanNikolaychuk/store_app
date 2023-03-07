@@ -1,7 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Breadcrumb,
   BreadcrumbItem,
@@ -15,7 +12,7 @@ import {
   Stack,
   StackDivider,
   Text,
-  useDisclosure
+  useToast
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
@@ -26,12 +23,14 @@ import { selectedSneakersByID } from '../../store/product/selectors';
 
 export const Info = () => {
   const { id } = useParams();
-  const { isOpen: isVisible, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const toast = useToast({
+    position: 'top'
+  });
+
   const sneakerByID = useAppSelector(selectedSneakersByID(id!));
 
   const actions = useActionCreators(CartActions);
   const [SelectSize, setSize] = useState('');
-  const [error, setError] = useState('');
 
   const onSelectSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSize(e.target.value);
@@ -43,15 +42,21 @@ export const Info = () => {
       SelectSize
     };
     if (!SelectSize) {
-      setError('Choose Size');
-      setTimeout(() => {
-        setError('');
-        onClose();
-      }, 2500);
+      toast({
+        title: 'Choose your size',
+        description: 'Size is a required field',
+        status: 'error',
+        duration: 2500,
+        isClosable: true
+      });
     } else {
-      onOpen();
+      toast({
+        description: `You added ${sneakerByID?.name} to your shopping cart`,
+        status: 'success',
+        duration: 2500,
+        isClosable: true
+      });
       actions.addToCart(AddSneakerToCart);
-      setTimeout(() => onClose(), 2500);
     }
   };
 
@@ -83,7 +88,7 @@ export const Info = () => {
         </Breadcrumb>
       </Box>
       <Container maxW={'1200px'}>
-        {isVisible && error === '' && (
+        {/* {isVisible && error === '' && (
           <Alert status="success">
             <AlertIcon />
             <Box display="flex" justifyContent="center">
@@ -101,7 +106,7 @@ export const Info = () => {
 
             <AlertDescription>{error}</AlertDescription>
           </Alert>
-        )}
+        )} */}
 
         <Flex
           mt="20"
