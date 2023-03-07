@@ -25,8 +25,6 @@ export const EditCard = () => {
   const [price, setPrice] = useState(() => id && sneakerByID?.price);
   const [category, setCategory] = useState(() => id && sneakerByID?.category);
   const [file, setFile] = useState('');
-  const [size, setSize] = useState(() => id && sneakerByID?.size);
-  const [image, setImage] = useState(() => id && sneakerByID?.image_url);
 
   const EditSneakerById = () => {
     const newEditSneaker = {
@@ -34,9 +32,8 @@ export const EditCard = () => {
       name,
       description,
       price,
-      file,
-      category,
-      image
+      image_url: file,
+      category
     };
 
     dispatch(fetchEditSneakerByID(newEditSneaker));

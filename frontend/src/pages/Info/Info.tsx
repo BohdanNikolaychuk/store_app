@@ -26,9 +26,7 @@ export const Info = () => {
   const toast = useToast({
     position: 'top'
   });
-
   const sneakerByID = useAppSelector(selectedSneakersByID(id!));
-
   const actions = useActionCreators(CartActions);
   const [SelectSize, setSize] = useState('');
 
@@ -88,26 +86,6 @@ export const Info = () => {
         </Breadcrumb>
       </Box>
       <Container maxW={'1200px'}>
-        {/* {isVisible && error === '' && (
-          <Alert status="success">
-            <AlertIcon />
-            <Box display="flex" justifyContent="center">
-              <AlertDescription>
-                You added {sneakerByID?.name} to your
-                <NavLink to={ROUTES.CART}>shopping cart.</NavLink>
-              </AlertDescription>
-            </Box>
-          </Alert>
-        )}
-
-        {error && (
-          <Alert status="error">
-            <AlertIcon />
-
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )} */}
-
         <Flex
           mt="20"
           display={{ md: 'block', xl: 'flex' }}
