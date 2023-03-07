@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { ISneakers } from '../product/types';
 
 type State = {
@@ -40,5 +40,5 @@ const cartSlice = createSlice({
     }
   }
 });
-export default cartSlice.reducer;
-export const { addToCart, removeItem, incrementQuantity, decrementQuantity } = cartSlice.actions;
+
+export const { reducer: CartReducer, actions: CartActions } = cartSlice;

@@ -18,7 +18,7 @@ import Links from '../../common/Links';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 
-import { logout } from '../../store/user/slice';
+import { AuthActions } from '../../store/user/slice';
 
 export const Header: FC = memo(() => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -27,7 +27,7 @@ export const Header: FC = memo(() => {
 
   const dispatch = useAppDispatch();
   const LogOut = () => {
-    dispatch(logout());
+    dispatch(AuthActions.logout());
   };
 
   const RenderMenuListButton = () => {
@@ -94,7 +94,7 @@ export const Header: FC = memo(() => {
       </Flex>
       {user?.roles[0] === 'admin' ? (
         <>
-          <Button as={NavLink} to={ROUTES.FORM_CREATE}>
+          <Button variant="primary" as={NavLink} to={ROUTES.FORM_CREATE}>
             Create new product
           </Button>
         </>

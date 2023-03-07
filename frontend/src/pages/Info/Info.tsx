@@ -19,18 +19,20 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import { useActionCreators, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
-import { addToCart } from '../../store/cart/slice';
-import { selecetSneakersByID } from '../../store/product/selectors';
+import { CartActions } from '../../store/cart/slice';
+import { selectedSneakersByID } from '../../store/product/selectors';
+
 export const Info = () => {
   const { id } = useParams();
   const { isOpen: isVisible, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
-  const sneakerByID = useAppSelector(selecetSneakersByID(id!));
-  const dispatch = useAppDispatch();
+  const sneakerByID = useAppSelector(selectedSneakersByID(id!));
 
+  const actions = useActionCreators(CartActions);
   const [SelectSize, setSize] = useState('');
   const [error, setError] = useState('');
+
   const onSelectSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSize(e.target.value);
   };
@@ -48,7 +50,7 @@ export const Info = () => {
       }, 2500);
     } else {
       onOpen();
-      dispatch(addToCart(AddSneakerToCart));
+      actions.addToCart(AddSneakerToCart);
       setTimeout(() => onClose(), 2500);
     }
   };
@@ -131,13 +133,7 @@ export const Info = () => {
                 </Select>
               </Box>
             </Stack>
-            <Button
-              rounded="none"
-              _hover={{ background: 'gray' }}
-              bg="#333333"
-              mt="10"
-              p="6"
-              onClick={() => onAddToCart()}>
+            <Button variant="primary" mt="10" p="6" onClick={() => onAddToCart()}>
               <Text color="white" textTransform="uppercase">
                 add To Cart
               </Text>

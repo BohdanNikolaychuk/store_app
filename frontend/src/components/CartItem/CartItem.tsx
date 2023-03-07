@@ -1,22 +1,21 @@
 import { Button, CloseButton, Flex, Link } from '@chakra-ui/react';
-import { useAppDispatch } from '../../hooks/redux.hooks';
-import { decrementQuantity, incrementQuantity, removeItem } from '../../store/cart/slice';
+import { useActionCreators } from '../../hooks/redux.hooks';
+import { CartActions } from '../../store/cart/slice';
 import { ISneakers } from '../../store/product/types';
 import { CartProductMeta } from '../CartProductMeta/CartProductMeta';
 import { PriceTag } from '../PriceTag/PriceTag';
 
 export const CartItem = ({ _id, name, quantity, image_url, price, SelectSize }: ISneakers) => {
-  const dispatch = useAppDispatch();
-
-  const deleteFromCart = () => {
-    dispatch(removeItem(_id));
+  const actions = useActionCreators(CartActions);
+  const deleteFromCart = (id: string) => {
+    actions.removeItem(id);
   };
   const onIncrement = (id: string) => {
-    dispatch(incrementQuantity(id));
+    actions.incrementQuantity(id);
   };
 
   const onDecrement = (id: string) => {
-    dispatch(decrementQuantity(id));
+    actions.decrementQuantity(id);
   };
 
   return (
@@ -38,7 +37,7 @@ export const CartItem = ({ _id, name, quantity, image_url, price, SelectSize }: 
           </Button>
         </Flex>
 
-        <CloseButton aria-label={`Delete ${name} from cart`} onClick={() => deleteFromCart()} />
+        <CloseButton aria-label={`Delete ${name} from cart`} onClick={() => deleteFromCart(_id!)} />
       </Flex>
 
       <Flex

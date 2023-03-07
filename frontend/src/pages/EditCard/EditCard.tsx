@@ -1,21 +1,30 @@
-import { Button, FormControl, FormLabel, Input, Select, Stack, Textarea } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Stack,
+  Textarea
+} from '@chakra-ui/react';
 import { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import ROUTES from '../../router/_routes';
 import { fetchEditSneakerByID } from '../../store/product/asyncActions';
-import { selecetSneakersByID } from '../../store/product/selectors';
+import { selectedSneakersByID } from '../../store/product/selectors';
 export const EditCard = () => {
   const { id } = useParams();
 
-  const sneakerByID = useAppSelector(selecetSneakersByID(id!));
+  const sneakerByID = useAppSelector(selectedSneakersByID(id!));
 
   const dispatch = useAppDispatch();
   const [name, setName] = useState(() => id && sneakerByID?.name);
   const [description, setDescription] = useState(() => id && sneakerByID?.description);
   const [price, setPrice] = useState(() => id && sneakerByID?.price);
   const [category, setCategory] = useState(() => id && sneakerByID?.category);
-
+  const [file, setFile] = useState('');
   const [size, setSize] = useState(() => id && sneakerByID?.size);
   const [image, setImage] = useState(() => id && sneakerByID?.image_url);
 
@@ -25,6 +34,7 @@ export const EditCard = () => {
       name,
       description,
       price,
+      file,
       category,
       image
     };
@@ -32,56 +42,79 @@ export const EditCard = () => {
     dispatch(fetchEditSneakerByID(newEditSneaker));
   };
 
+  const onSetFile = (e: any) => {
+    const file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      setFile(reader.result as string);
+    };
+  };
+
   return (
     <>
-      <Button as={NavLink} to={ROUTES.MAIN}>
-        To Main
-      </Button>
-
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Box>
         <Stack spacing={4}>
-          <FormControl id="name">
-            <FormLabel>Name</FormLabel>
-            <Input value={name} onChange={(e) => setName(e.target.value)} type="text" />
-          </FormControl>
-          <FormControl id="description">
-            <FormLabel>Description</FormLabel>
+          <Flex>
+            <FormControl>
+              <FormLabel>Product Name</FormLabel>
+              <Input
+                bg="#f7f7f7"
+                rounded="none"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Description</FormLabel>
 
-            <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Here is a sample placeholder"
-            />
-          </FormControl>
-          <FormControl id="description">
+              <Textarea
+                bg="#f7f7f7"
+                rounded="none"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Here is a sample placeholder"
+              />
+            </FormControl>
+          </Flex>
+          <FormControl>
             <FormLabel>Size</FormLabel>
-            <Select variant="unstyled">
-              {/* {size?.map((element: any) => (
+            <Select border="none" rounded="none" bg="#f7f7f7" placeholder="Select option">
+              {sneakerByID?.size?.map((element: any) => (
                 <option key={element.size}>{element.size}</option>
-              ))} */}
+              ))}
             </Select>
           </FormControl>
-          <FormControl id="description">
+          <FormControl>
             <FormLabel>Price</FormLabel>
-            <Input value={price} onChange={(e) => setPrice(e.target.value)} type="number" />
+            <Input
+              bg="#f7f7f7"
+              rounded="none"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              type="number"
+            />
           </FormControl>
-          <FormControl id="description">
+          <FormControl>
             <FormLabel>Category</FormLabel>
             <Select
+              bg="#f7f7f7"
+              rounded="none"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               variant="unstyled"
               placeholder="Category">
               <option value="Nike">Nike</option>
               <option value="Adidas">Adidas</option>
-              <option value="Rebok">Rebok</option>
               <option value="Air Jordan">Air Jordan</option>
             </Select>
           </FormControl>
 
-          <FormControl id="description">
+          <FormControl id="image">
             <FormLabel>Image</FormLabel>
-            <Input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+            <Input type="file" onChange={(e) => onSetFile(e)} />
           </FormControl>
 
           <Stack spacing={10}>
@@ -96,7 +129,7 @@ export const EditCard = () => {
             </Button>
           </Stack>
         </Stack>
-      </Stack>
+      </Box>
     </>
   );
 };

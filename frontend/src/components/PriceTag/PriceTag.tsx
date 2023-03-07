@@ -1,4 +1,4 @@
-import { HStack, Text, TextProps, useColorModeValue as mode } from '@chakra-ui/react';
+import { HStack, Text, TextProps } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 
 interface PriceTagProps {
@@ -34,16 +34,9 @@ interface PriceProps {
 
 const Price = (props: PriceProps) => {
   const { isOnSale, children, textProps } = props;
-  const defaultColor = mode('gray.700', 'gray.400');
-  const onSaleColor = mode('gray.400', 'gray.700');
-  const color = isOnSale ? onSaleColor : defaultColor;
+
   return (
-    <Text
-      as="span"
-      fontWeight="medium"
-      color={color}
-      textDecoration={isOnSale ? 'line-through' : 'none'}
-      {...textProps}>
+    <Text as="span" fontWeight="medium" {...textProps}>
       {children}
     </Text>
   );

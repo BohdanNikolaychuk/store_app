@@ -10,6 +10,10 @@ import { ISneakers } from '../../store/product/types';
 export const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
   const dispatch = useAppDispatch();
 
+  const onDeletedProduct = (id: string) => {
+    dispatch(fetchDeleteSneaker(id));
+  };
+
   return (
     <>
       <TableContainer>
@@ -25,7 +29,7 @@ export const TableProduct = ({ _id, name, price, category, image_url }: ISneaker
                 <Button as={NavLink} to={ROUTES.EDITBYID(_id)}>
                   <RiFileEditLine />
                 </Button>
-                <Button onClick={() => dispatch(fetchDeleteSneaker(_id))}>
+                <Button onClick={() => onDeletedProduct(_id)}>
                   <FiDelete />
                 </Button>
               </Td>

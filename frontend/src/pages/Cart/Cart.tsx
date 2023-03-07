@@ -3,10 +3,17 @@ import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
 import { CartItem } from '../../components/CartItem/CartItem';
 import { CartOrderSummary } from '../../components/CartOrderSummary/CartOrderSummary';
 import { useAppSelector } from '../../hooks/redux.hooks';
-import { selectCartData } from '../../store/cart/selectors';
 import { ISneakers } from '../../store/product/types';
 export const Cart = () => {
-  const { cart } = useAppSelector(selectCartData);
+  const cart = useAppSelector((state) => state.cart.cart);
+
+  const renderCartProduct = () => {
+    if (cart.length === 0) {
+      return <>You have no items in your shopping cart.</>;
+    } else {
+      return cart.map((item: ISneakers) => <CartItem key={item._id} {...item} />);
+    }
+  };
 
   return (
     <>
@@ -24,12 +31,7 @@ export const Cart = () => {
               ITEM
             </Heading>
             <hr />
-            <Stack spacing="6">
-              {cart.length === 0 && <>You have no items in your shopping cart.</>}
-              {cart.map((item: ISneakers) => (
-                <CartItem key={item._id} {...item} />
-              ))}
-            </Stack>
+            <Stack spacing="6">{renderCartProduct()}</Stack>
           </Stack>
 
           <Flex direction="column" align="center" flex="1">

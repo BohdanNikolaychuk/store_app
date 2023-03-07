@@ -4,5 +4,13 @@ import { Admin } from '../Admin/Admin';
 export const Home = () => {
   const user = useAppSelector((state) => state.auth.user);
 
-  return <>{user?.roles.includes('admin') ? <Admin /> : <>userContent</>}</>;
+  const renderRoleInterface = () => {
+    if (user?.roles.includes('admin')) {
+      return <Admin />;
+    } else {
+      return <>Shop now </>;
+    }
+  };
+
+  return <>{renderRoleInterface()}</>;
 };

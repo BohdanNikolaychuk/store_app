@@ -1,9 +1,19 @@
-import { Button, FormControl, FormLabel, Input, Select, Stack, Textarea } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Textarea
+} from '@chakra-ui/react';
 import { FC, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { fetchAddSneaker } from '../../store/product/asyncActions';
+
 export const CreateProduct: FC = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -21,7 +31,6 @@ export const CreateProduct: FC = () => {
 
   const onCreateSize = () => {
     setSize([{ size: sizeField }, ...size]);
-
     setSizeField('');
   };
 
@@ -30,7 +39,6 @@ export const CreateProduct: FC = () => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
 
-    // on reader load somthing...
     reader.onload = () => {
       setFile(reader.result as string);
     };
@@ -50,80 +58,78 @@ export const CreateProduct: FC = () => {
   };
 
   return (
-    <>
-      <Button as={NavLink} to={ROUTES.MAIN}>
-        To Main
-      </Button>
-
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <Stack spacing={4}>
+    <Box>
+      <Flex justifyContent="space-between">
+        <Box w="50%" p="10">
           <FormControl id="name">
-            <FormLabel>Name</FormLabel>
+            <FormLabel>Product Name</FormLabel>
             <Input
-              placeholder="Here is a sample Name"
+              variant="primary"
               value={name}
               onChange={(e) => setName(e.target.value)}
               type="text"
             />
           </FormControl>
+          <FormControl>
+            <FormLabel>Brand</FormLabel>
+            <Select
+              variant="primary"
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Brand">
+              <option value="Nike">Nike</option>
+              <option value="Adidas">Adidas</option>
+              <option value="Air Jordan">Air Jordan</option>
+            </Select>
+          </FormControl>
           <FormControl id="description">
             <FormLabel>Description</FormLabel>
-
             <Textarea
+              variant="primary"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Here is a sample description"
             />
           </FormControl>
+        </Box>
+        <Box w="50%" p="10">
+          <FormControl>
+            <FormLabel> Product Image</FormLabel>
+            <Input variant="primary" type="file" onChange={(e) => onSetFile(e)} />
+          </FormControl>
+          <FormControl id="size">
+            <FormLabel>Size</FormLabel>
+            <Input
+              variant="primary"
+              onChange={(e) => onSizeField(e)}
+              placeholder="Enter size"
+              type="number"
+            />
+            <Button mb="5" variant="primary" onClick={() => onCreateSize()}>
+              Create Size
+            </Button>
+            <Select variant="primary">
+              {size.map((element: any, i) => (
+                <option key={i}>{element.size}</option>
+              ))}
+            </Select>
+          </FormControl>
           <FormControl id="description">
             <FormLabel>Price</FormLabel>
             <Input
+              variant="primary"
               value={price}
               onChange={(e) => setPrice(+e.target.value)}
               placeholder="Enter price"
               type="number"
             />
           </FormControl>
-          <FormControl id="size">
-            <FormLabel>Size</FormLabel>
-            <Input onChange={(e) => onSizeField(e)} placeholder="Enter size" type="number" />
-            <Button onClick={() => onCreateSize()}>Create Size</Button>
-          </FormControl>
-          <Select>
-            {size.map((element: any, i) => (
-              <option key={i}>{element.size}</option>
-            ))}
-          </Select>
-          <FormControl id="description">
-            <Select
-              onChange={(e) => setCategory(e.target.value)}
-              variant="unstyled"
-              placeholder="Category">
-              <option value="Nike">Nike</option>
-              <option value="Adidas">Adidas</option>
-              <option value="Rebok">Rebok</option>
-              <option value="Air Jordan">Air Jordan</option>
-            </Select>
-          </FormControl>
-          <FormControl id="image">
-            <FormLabel>Image</FormLabel>
-            <Input type="file" onChange={(e) => onSetFile(e)} />
-          </FormControl>
-
-          <Stack spacing={10}>
-            <Button
-              onClick={() => OnCreateNewSneaker()}
-              rounded="none"
-              _hover={{ background: 'gray' }}
-              bg="#333333"
-              mt="10"
-              p="6"
-              color="white">
-              Create
-            </Button>
-          </Stack>
-        </Stack>
-      </Stack>
-    </>
+        </Box>
+      </Flex>
+      <Box>
+        <Button onClick={() => OnCreateNewSneaker()} type="submit" variant="primary">
+          Create Product
+        </Button>
+      </Box>
+    </Box>
   );
 };
