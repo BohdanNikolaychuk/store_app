@@ -52,6 +52,28 @@ export const Header: FC = memo(() => {
     }
   };
 
+  const renderBrandList = () => {
+    if (user?.roles[0] !== 'admin') {
+      return (
+        <>
+          <HStack as={'nav'} spacing={10} display={{ md: 'flex' }} justifyContent="center">
+            {Links.map((link) => (
+              <NavLink
+                to={
+                  link.name === 'Shop All' ? `${ROUTES.SHOP}` : `${ROUTES.SHOP}?name=${link!.name}`
+                }
+                key={link!.name}>
+                <Button opacity="0.5" _hover={{ opacity: '1' }} background={'inherit'}>
+                  {link!.icon === '' ? link!.name : link?.icon}
+                </Button>
+              </NavLink>
+            ))}
+          </HStack>
+        </>
+      );
+    }
+  };
+
   return (
     <Box px={4}>
       <Flex h={16} alignItems={'center'} justifyContent="space-between">
@@ -92,25 +114,7 @@ export const Header: FC = memo(() => {
           </Menu>
         </Flex>
       </Flex>
-      {user?.roles[0] === 'admin' ? (
-        <>
-          <Button variant="primary" as={NavLink} to={ROUTES.FORM_CREATE}>
-            Create new product
-          </Button>
-        </>
-      ) : (
-        <HStack as={'nav'} spacing={10} display={{ md: 'flex' }} justifyContent="center">
-          {Links.map((link) => (
-            <NavLink
-              to={link.name === 'Shop All' ? `${ROUTES.SHOP}` : `${ROUTES.SHOP}?name=${link!.name}`}
-              key={link!.name}>
-              <Button opacity="0.5" _hover={{ opacity: '1' }} background={'inherit'}>
-                {link!.icon === '' ? link!.name : link?.icon}
-              </Button>
-            </NavLink>
-          ))}
-        </HStack>
-      )}
+      {renderBrandList()}
     </Box>
   );
 });

@@ -4,9 +4,11 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Container,
+  Select,
   SimpleGrid,
   Text
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import { CardView } from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
@@ -14,17 +16,20 @@ import ROUTES from '../../router/_routes';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { ISneakers } from '../../store/product/types';
+
 export const Shop = () => {
   const sneakers = useAppSelector((state) => state.sneakers.sneakers);
   const status = useAppSelector((state) => state.sneakers.status);
   const user = useAppSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
+  const [selectSort, setSelectSort] = useState('Sort By Name');
+  console.log(selectSort);
 
   if (status === 'init' || status === 'loading') {
     return <>Loading</>;
   }
 
-  const filterSnaker = sneakers.filter((element) => {
+  const filterSneakers = sneakers.filter((element) => {
     if (!searchParams.get('name')) {
       return sneakers;
     }
@@ -50,7 +55,7 @@ export const Shop = () => {
             <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="4xl">
               {searchParams.get('name')}
             </Text>
-            <Text pt="2" pb="2" color="black" display="flex" justifyContent="center" fontSize="md">
+            <Box display="flex" justifyContent="center" color="black">
               <Breadcrumb>
                 <BreadcrumbItem>
                   <BreadcrumbLink
@@ -65,15 +70,21 @@ export const Shop = () => {
                   <BreadcrumbLink>{searchParams.get('name')!}</BreadcrumbLink>
                 </BreadcrumbItem>
               </Breadcrumb>
-            </Text>
+            </Box>
           </>
         )}
-        )
       </Box>
+
       <Container maxW="1200px">
+        <Box display="flex" justifyContent="end" w="20%">
+          <Select onChange={(e) => setSelectSort(e.target.value)} variant="primary">
+            <option>Sort By Name</option>
+            <option>Sort By Price</option>
+          </Select>
+        </Box>
         <Box display="flex">
           <SimpleGrid w="100%" columns={[1, 2, 3]}>
-            {filterSnaker.map((element: ISneakers) => (
+            {filterSneakers.map((element: ISneakers) => (
               <NavLink
                 key={element._id}
                 to={user?.roles[0] === 'admin' ? '' : `${ROUTES.PRODUCTBYID(element._id)}`}>

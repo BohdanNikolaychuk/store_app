@@ -6,12 +6,12 @@ import {
   Box,
   Button,
   Container,
-  Heading,
   Input,
   InputGroup,
   InputRightElement,
   Stack,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ROUTES from '../../router/_routes';
@@ -29,7 +29,9 @@ export const Login: React.FC = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
+  const toast = useToast({
+    position: 'top'
+  });
   const dispatch = useAppDispatch();
 
   const validationSchema = Yup.object().shape({
@@ -49,7 +51,17 @@ export const Login: React.FC = () => {
   });
 
   const onSubmit = async (UserData: ILogin) => {
-    dispatch(userLogin(UserData));
+    try {
+      await dispatch(userLogin(UserData)).unwrap();
+    } catch (error) {
+      toast({
+        description:
+          'The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.',
+        status: 'error',
+        duration: 2500,
+        isClosable: true
+      });
+    }
   };
 
   if (isAuth) {
@@ -66,11 +78,6 @@ export const Login: React.FC = () => {
       <Container maxW="600px">
         <Stack mt="40px" bg="#f7f7f7" spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack align={'center'}>
-              <Heading fontSize={'4xl'} textAlign={'center'}>
-                Login
-              </Heading>
-            </Stack>
             <Box rounded={'lg'} p={8}>
               <Stack spacing={4}>
                 <Box>

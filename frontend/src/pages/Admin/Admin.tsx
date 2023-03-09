@@ -1,7 +1,9 @@
-import { Input } from '@chakra-ui/react';
+import { Button, Input } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { TableProduct } from '../../components/Table/Table';
 import { useAppSelector } from '../../hooks/redux.hooks';
+import ROUTES from '../../router/_routes';
 import { ISneakers } from '../../store/product/types';
 
 export const Admin = () => {
@@ -22,6 +24,10 @@ export const Admin = () => {
   );
   return (
     <>
+      <Button variant="primary" as={NavLink} to={ROUTES.FORM_CREATE}>
+        Create new product
+      </Button>
+
       <Input placeholder="Filter by id or name" onChange={(e) => setFilter(e.target.value)} />
 
       {filterSne.map((element: ISneakers) => (

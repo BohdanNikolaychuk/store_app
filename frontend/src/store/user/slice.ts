@@ -6,8 +6,7 @@ const initialState: State = {
   isAuth: null,
   user: null,
   token: null,
-  loading: null,
-  error: null
+  status: 'init'
 };
 
 const authSlice = createSlice({
@@ -15,9 +14,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.error = null;
       state.isAuth = null;
-      state.loading = null;
+      state.status = 'init';
       state.user = null;
       state.token = null;
       localStorage.removeItem('userToken');
@@ -27,36 +25,35 @@ const authSlice = createSlice({
     //login
     builder
       .addCase(userLogin.pending, (state) => {
-        state.loading = true;
+        state.status = 'loading';
       })
 
       .addCase(userLogin.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = 'success';
         state.isAuth = true;
         state.user = action.payload.user;
         state.token = action.payload.access_token;
       })
       .addCase(userLogin.rejected, (state, action) => {
-        state.loading = false;
+        state.status = 'error';
         state.isAuth = null;
-        state.error = action.payload as string;
       })
 
       //get current user
 
       .addCase(getCurrentUser.pending, (state) => {
-        state.loading = true;
+        state.status = 'loading';
       })
 
       .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = 'success';
         state.isAuth = true;
         state.user = action.payload;
       })
 
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isAuth = null;
-        state.error = action.payload as string;
+        state.status = 'error';
       });
   }
 });

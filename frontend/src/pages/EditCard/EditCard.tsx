@@ -57,8 +57,7 @@ export const EditCard = () => {
             <FormControl>
               <FormLabel>Product Name</FormLabel>
               <Input
-                bg="#f7f7f7"
-                rounded="none"
+                variant="primary"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
