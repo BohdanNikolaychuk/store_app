@@ -21,12 +21,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { ILogin } from '../../@types/IAuth.interface';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import { useAppDispatch } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
 
 export const Login: React.FC = () => {
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
-
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const toast = useToast({
@@ -52,7 +50,10 @@ export const Login: React.FC = () => {
 
   const onSubmit = async (UserData: ILogin) => {
     try {
-      await dispatch(userLogin(UserData)).unwrap();
+      let res = await dispatch(userLogin(UserData)).unwrap();
+      if (res.access_token) {
+        navigate(ROUTES.MAIN);
+      }
     } catch (error) {
       toast({
         description:
@@ -63,10 +64,6 @@ export const Login: React.FC = () => {
       });
     }
   };
-
-  if (isAuth) {
-    navigate(ROUTES.MAIN);
-  }
 
   return (
     <>

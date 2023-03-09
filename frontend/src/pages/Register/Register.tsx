@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Container,
-  Heading,
   Input,
   InputGroup,
   InputRightElement,
@@ -61,11 +60,6 @@ export const Register: React.FC = () => {
       <Container maxW="600px">
         <Stack mt="40px" bg="#f7f7f7" spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack align={'center'}>
-              <Heading fontSize={'4xl'} textAlign={'center'}>
-                Sign up
-              </Heading>
-            </Stack>
             <Box rounded={'lg'} p={8}>
               <Stack spacing={4}>
                 <Box>

@@ -4,7 +4,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Container,
-  Select,
   SimpleGrid,
   Text
 } from '@chakra-ui/react';
@@ -23,7 +22,6 @@ export const Shop = () => {
   const user = useAppSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
   const [selectSort, setSelectSort] = useState('Sort By Name');
-  console.log(selectSort);
 
   if (status === 'init' || status === 'loading') {
     return <>Loading</>;
@@ -76,12 +74,12 @@ export const Shop = () => {
       </Box>
 
       <Container maxW="1200px">
-        <Box display="flex" justifyContent="end" w="20%">
+        {/* <Box display="flex" justifyContent="end" w="20%">
           <Select onChange={(e) => setSelectSort(e.target.value)} variant="primary">
             <option>Sort By Name</option>
             <option>Sort By Price</option>
           </Select>
-        </Box>
+        </Box> */}
         <Box display="flex">
           <SimpleGrid w="100%" columns={[1, 2, 3]}>
             {filterSneakers.map((element: ISneakers) => (
