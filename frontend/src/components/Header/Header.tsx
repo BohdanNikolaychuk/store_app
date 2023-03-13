@@ -30,8 +30,8 @@ export const Header: FC = memo(() => {
     dispatch(AuthActions.logout());
   };
 
-  const RenderMenuListButton = () => {
-    if (isAuth !== null) {
+  const renderMenuListButton = () => {
+    if (isAuth) {
       return (
         <>
           <MenuItem>Hello,{user?.username}</MenuItem>
@@ -56,7 +56,7 @@ export const Header: FC = memo(() => {
     if (user?.roles[0] !== 'admin') {
       return (
         <>
-          <HStack as={'nav'} spacing={10} display={{ md: 'flex' }} justifyContent="center">
+          <HStack as={'nav'} spacing={10} display="flex" justifyContent="center">
             {Links.map((link) => (
               <NavLink
                 to={
@@ -64,7 +64,7 @@ export const Header: FC = memo(() => {
                 }
                 key={link!.name}>
                 <Button opacity="0.5" _hover={{ opacity: '1' }} background={'inherit'}>
-                  {link!.icon === '' ? link!.name : link?.icon}
+                  {link!.icon}
                 </Button>
               </NavLink>
             ))}
@@ -109,7 +109,7 @@ export const Header: FC = memo(() => {
               </Button>
             </MenuButton>
             <MenuList fontSize={17} zIndex={5555}>
-              {RenderMenuListButton()}
+              {renderMenuListButton()}
             </MenuList>
           </Menu>
         </Flex>

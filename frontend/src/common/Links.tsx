@@ -17,7 +17,7 @@ const Links = [
   },
   {
     name: 'Shop All',
-    icon: ''
+    icon: 'Shop All'
   }
 ];
 
