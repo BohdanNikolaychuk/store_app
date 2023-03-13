@@ -7,14 +7,18 @@ import ROUTES from '../../router/_routes';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { BreadCrumb } from '../../components/BreadCrumb/BreadCrumb';
 import { useAppSelector } from '../../hooks/redux.hooks';
+import { filterSneakers } from '../../store/product/selectors';
 import { ISneakers } from '../../store/product/types';
 
 export const Shop = memo(() => {
   const sneakers = useAppSelector((state) => state.sneakers.sneakers);
+
   const status = useAppSelector((state) => state.sneakers.status);
   const user = useAppSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
   const [selectSort, setSelectSort] = useState('Sort By Name');
+
+  const visibleSneakers = useAppSelector(filterSneakers(searchParams.get('name')));
 
   if (status === 'init' || status === 'loading') {
     return <>Loading</>;
@@ -48,12 +52,12 @@ export const Shop = memo(() => {
     }
   };
 
-  const visibleSneakers = sneakers.filter((element) => {
-    if (!searchParams.get('name')) {
-      return sneakers;
-    }
-    return element.category === searchParams.get('name');
-  });
+  // const visibleSneakers = sneakers.filter((element) => {
+  //   if (!searchParams.get('name')) {
+  //     return sneakers;
+  //   }
+  //   return element.category === searchParams.get('name');
+  // });
 
   return (
     <>
