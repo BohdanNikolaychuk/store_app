@@ -8,20 +8,27 @@ import {
   Select,
   Textarea
 } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
-import { fetchAddSneaker } from '../../store/product/asyncActions';
+import { fetchAddSneaker, NewSneaker } from '../../store/product/asyncActions';
 
-export const CreateProduct: FC = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState('');
-  const [file, setFile] = useState('');
-  const [size, setSize] = useState<Array<{ size: string }>>([]);
+const clearData: NewSneaker = {
+  name: '',
+  description: '',
+  price: '',
+  category: '',
+  image_url: '',
+  size: []
+};
+
+export const CreateProduct: FC = memo(() => {
+  const [data, setData] = useState(clearData);
+
+  //size
   const [sizeField, setSizeField] = useState('');
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -30,7 +37,11 @@ export const CreateProduct: FC = () => {
   };
 
   const onCreateSize = () => {
-    setSize([{ size: sizeField }, ...size]);
+    setData((prev) => ({
+      ...prev,
+      size: [...prev.size, { size: sizeField }]
+    }));
+
     setSizeField('');
   };
 
@@ -40,21 +51,18 @@ export const CreateProduct: FC = () => {
     reader.readAsDataURL(file);
 
     reader.onload = () => {
-      setFile(reader.result as string);
+      setData((prev) => ({
+        ...prev,
+        image_url: reader.result as string
+      }));
     };
   };
 
   const OnCreateNewSneaker = () => {
-    const newSneaker = {
-      name,
-      description,
-      price: price + '',
-      category,
-      size,
-      image_url: file
-    };
-    dispatch(fetchAddSneaker(newSneaker));
+    dispatch(fetchAddSneaker(data));
+
     navigate(ROUTES.MAIN);
+    setData(clearData);
   };
 
   return (
@@ -65,8 +73,13 @@ export const CreateProduct: FC = () => {
             <FormLabel>Product Name</FormLabel>
             <Input
               variant="primary"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={data.name}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  name: e.target.value
+                }))
+              }
               type="text"
             />
           </FormControl>
@@ -74,7 +87,12 @@ export const CreateProduct: FC = () => {
             <FormLabel>Brand</FormLabel>
             <Select
               variant="primary"
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  category: e.target.value
+                }))
+              }
               placeholder="Brand">
               <option value="Nike">Nike</option>
               <option value="Adidas">Adidas</option>
@@ -85,8 +103,13 @@ export const CreateProduct: FC = () => {
             <FormLabel>Description</FormLabel>
             <Textarea
               variant="primary"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={data.description}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  description: e.target.value
+                }))
+              }
               placeholder="Here is a sample description"
             />
           </FormControl>
@@ -108,7 +131,7 @@ export const CreateProduct: FC = () => {
               Create Size
             </Button>
             <Select variant="primary">
-              {size.map((element: any, i) => (
+              {data.size.map((element: any, i) => (
                 <option key={i}>{element.size}</option>
               ))}
             </Select>
@@ -117,8 +140,13 @@ export const CreateProduct: FC = () => {
             <FormLabel>Price</FormLabel>
             <Input
               variant="primary"
-              value={price}
-              onChange={(e) => setPrice(+e.target.value)}
+              value={data.price}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  price: e.target.value
+                }))
+              }
               placeholder="Enter price"
               type="number"
             />
@@ -132,4 +160,4 @@ export const CreateProduct: FC = () => {
       </Box>
     </Box>
   );
-};
+});

@@ -20,12 +20,13 @@ export const fetchDeleteSneaker = createAsyncThunk(
   }
 );
 
-type NewSneaker = {
+export type NewSneaker = {
   name: string;
   description: string;
   price: string;
   category: string;
   image_url: string;
+  size: Array<{ size: string }>;
 };
 
 export const fetchAddSneaker = createAsyncThunk(

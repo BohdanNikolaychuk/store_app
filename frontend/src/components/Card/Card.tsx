@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 import { ISneakers } from '../../store/product/types';
 
-export const CardView = memo(({ _id, name, price, category, image_url }: ISneakers) => {
+export const CardView = memo(({ name, price, image_url }: ISneakers) => {
   return (
     <Center py={12}>
       <Box

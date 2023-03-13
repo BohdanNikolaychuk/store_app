@@ -75,7 +75,7 @@ export const Header: FC = memo(() => {
   };
 
   return (
-    <Box px={4}>
+    <Box px={4} pos="relative" top="0" left="0" zIndex="100">
       <Flex h={16} alignItems={'center'} justifyContent="space-between">
         <HStack spacing={8} alignItems={'center'}>
           <Text as={NavLink} to={ROUTES.MAIN}>

@@ -13,7 +13,7 @@ import {
   Text,
   useToast
 } from '@chakra-ui/react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ROUTES from '../../router/_routes';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,9 +23,12 @@ import * as Yup from 'yup';
 import { ILogin } from '../../@types/IAuth.interface';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
-
+type RedirectLocationState = {
+  redirectTo: Location;
+};
 export const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { state: locationState } = useLocation();
   const navigate = useNavigate();
   const toast = useToast({
     position: 'top'
@@ -52,7 +55,7 @@ export const Login: React.FC = () => {
     try {
       let res = await dispatch(userLogin(UserData)).unwrap();
       if (res.access_token) {
-        navigate(ROUTES.MAIN);
+        navigate(-1);
       }
     } catch (error) {
       toast({

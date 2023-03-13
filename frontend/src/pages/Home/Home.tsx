@@ -12,13 +12,11 @@ export const Home = () => {
       return <Admin />;
     } else {
       return (
-        <>
-          <Box display="flex" justifyContent="center" mt="8">
-            <Button variant="primary" as={NavLink} to={ROUTES.SHOP}>
-              Shop Now
-            </Button>
-          </Box>
-        </>
+        <Box display="flex" justifyContent="center" mt="8">
+          <Button variant="primary" as={NavLink} to={ROUTES.SHOP}>
+            Shop Now
+          </Button>
+        </Box>
       );
     }
   };

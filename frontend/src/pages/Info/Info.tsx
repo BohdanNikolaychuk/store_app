@@ -1,8 +1,5 @@
 import {
   Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
   Button,
   Container,
   Flex,
@@ -15,9 +12,9 @@ import {
   useToast
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { BreadCrumb } from '../../components/BreadCrumb/BreadCrumb';
 import { useActionCreators, useAppSelector } from '../../hooks/redux.hooks';
-import ROUTES from '../../router/_routes';
 import { CartActions } from '../../store/cart/slice';
 import { selectedSneakersByID } from '../../store/product/selectors';
 
@@ -61,37 +58,14 @@ export const Info = () => {
   return (
     <>
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
-        <Breadcrumb color="black" pt="2" pb="2" display="flex" justifyContent="center">
-          <BreadcrumbItem>
-            <BreadcrumbLink opacity={'0.5'} _hover={{ color: 'red' }} as={NavLink} to={ROUTES.SHOP}>
-              Shop
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              opacity={'0.5'}
-              _hover={{ color: 'red' }}
-              to={ROUTES.SHOP + `?name=${sneakerByID?.category}`}
-              as={NavLink}>
-              {sneakerByID?.category}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink>
-              <Text overflow="hidden" textOverflow="ellipsis">
-                {sneakerByID?.name}{' '}
-              </Text>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
+        <BreadCrumb brandName={sneakerByID?.category} productName={sneakerByID?.name} />
       </Box>
       <Container maxW={'1200px'}>
         <Flex
           mt="20"
           display={{ md: 'block', xl: 'flex' }}
-          justifyContent={{ xl: 'space-between' }}
-          margin={{ md: '0 auto' }}>
-          <Image h="auto" maxW="100%" src={sneakerByID?.image_url} />
+          justifyContent={{ xl: 'space-between' }}>
+          <Image h="auto" maxW="100%" margin={{ md: '0 auto' }} src={sneakerByID?.image_url} />
 
           <Box mt="4">
             <Heading color="#696969">{sneakerByID?.name}</Heading>
