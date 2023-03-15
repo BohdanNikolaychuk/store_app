@@ -4,7 +4,6 @@ import { RouterProvider } from 'react-router-dom';
 import { useAppDispatch } from './hooks/redux.hooks';
 
 import router from './router';
-import { fetchAllSneakers } from './store/product/asyncActions';
 import { getCurrentUser } from './store/user/asyncActions';
 
 function App() {
@@ -14,10 +13,6 @@ function App() {
       dispatch(getCurrentUser());
     }
   }, [dispatch, localStorage.getItem('userToken')]);
-
-  useEffect(() => {
-    dispatch(fetchAllSneakers());
-  }, []);
 
   return <RouterProvider router={router}></RouterProvider>;
 }

@@ -9,7 +9,7 @@ import {
   MenuList,
   Text
 } from '@chakra-ui/react';
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 
 import { BiShoppingBag } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
@@ -24,6 +24,7 @@ export const Header: FC = memo(() => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const user = useAppSelector((state) => state.auth.user);
   const cart = useAppSelector((state) => state.cart.cart);
+  const MemoLink = useMemo(() => Links, []);
 
   const dispatch = useAppDispatch();
   const LogOut = () => {
@@ -57,7 +58,7 @@ export const Header: FC = memo(() => {
       return (
         <>
           <HStack as={'nav'} spacing={10} display="flex" justifyContent="center">
-            {Links.map((link) => (
+            {MemoLink.map((link) => (
               <NavLink
                 to={
                   link.name === 'Shop All' ? `${ROUTES.SHOP}` : `${ROUTES.SHOP}?name=${link!.name}`

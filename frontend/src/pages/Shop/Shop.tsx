@@ -1,17 +1,26 @@
 import { Box, Container, SimpleGrid, Text } from '@chakra-ui/react';
-import { memo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CardView } from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
 
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { BreadCrumb } from '../../components/BreadCrumb/BreadCrumb';
-import { useAppSelector } from '../../hooks/redux.hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import { fetchAllSneakers } from '../../store/product/asyncActions';
 import { filterSneakers } from '../../store/product/selectors';
 import { ISneakers } from '../../store/product/types';
 
-export const Shop = memo(() => {
+export const Shop = () => {
+  console.log('Shop render');
+
+  const dispatch = useAppDispatch();
   const sneakers = useAppSelector((state) => state.sneakers.sneakers);
+  useEffect(() => {
+    if (sneakers.length === 0) {
+      dispatch(fetchAllSneakers());
+    }
+  }, [sneakers]);
 
   const status = useAppSelector((state) => state.sneakers.status);
   const user = useAppSelector((state) => state.auth.user);
@@ -66,12 +75,6 @@ export const Shop = memo(() => {
       </Box>
 
       <Container maxW="1200px">
-        {/* <Box display="flex" justifyContent="end" w="20%">
-          <Select onChange={(e) => setSelectSort(e.target.value)} variant="primary">
-            <option>Sort By Name</option>
-            <option>Sort By Price</option>
-          </Select>
-        </Box> */}
         <Box display="flex">
           <SimpleGrid w="100%" columns={[1, 2, 3]}>
             {visibleSneakers.map((element: ISneakers) => (
@@ -86,4 +89,4 @@ export const Shop = memo(() => {
       </Container>
     </>
   );
-});
+};

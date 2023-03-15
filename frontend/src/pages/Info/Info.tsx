@@ -11,14 +11,14 @@ import {
   Text,
   useToast
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BreadCrumb } from '../../components/BreadCrumb/BreadCrumb';
 import { useActionCreators, useAppSelector } from '../../hooks/redux.hooks';
 import { CartActions } from '../../store/cart/slice';
 import { selectedSneakersByID } from '../../store/product/selectors';
 
-export const Info = () => {
+export const Info = memo(() => {
   const { id } = useParams();
   const toast = useToast({
     position: 'top'
@@ -61,10 +61,7 @@ export const Info = () => {
         <BreadCrumb brandName={sneakerByID?.category} productName={sneakerByID?.name} />
       </Box>
       <Container maxW={'1200px'}>
-        <Flex
-          mt="20"
-          display={{ md: 'block', xl: 'flex' }}
-          justifyContent={{ xl: 'space-between' }}>
+        <Flex display={{ md: 'block', xl: 'flex' }} justifyContent={{ xl: 'space-between' }}>
           <Image h="auto" maxW="100%" margin={{ md: '0 auto' }} src={sneakerByID?.image_url} />
 
           <Box mt="4">
@@ -100,4 +97,4 @@ export const Info = () => {
       </Container>
     </>
   );
-};
+});
