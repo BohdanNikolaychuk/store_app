@@ -1,0 +1,9 @@
+export { Admin } from './Admin/Admin';
+export { Cart } from './Cart/Cart';
+export { CreateProduct } from './CreateProduct/CreateProduct';
+export { EditCard } from './EditCard/EditCard';
+export { Home } from './Home/Home';
+export { Info } from './Info/Info';
+export { Login } from './Login/Login';
+export { Register } from './Register/Register';
+export { Shop } from './Shop/Shop';

@@ -2,16 +2,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/Layout/Layout';
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
 import { PublicRoute } from '../components/PublicRoute/PublicRoute';
-import { Admin } from '../pages/Admin/Admin';
 
-import { Cart } from '../pages/Cart/Cart';
-import { CreateProduct } from '../pages/CreateProduct/CreateProduct';
-import { EditCard } from '../pages/EditCard/EditCard';
-import { Home } from '../pages/Home/Home';
-import { Info } from '../pages/Info/Info';
-import { Login } from '../pages/Login/Login';
-import { Register } from '../pages/Register/Register';
-import { Shop } from '../pages/Shop/Shop';
+import { Admin, Cart, CreateProduct, EditCard, Home, Info, Login, Register, Shop } from '../pages';
+
 import ROUTES from './_routes';
 
 const router = createBrowserRouter([
