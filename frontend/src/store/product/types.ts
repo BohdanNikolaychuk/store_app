@@ -1,7 +1,6 @@
 export interface State {
   sneakers: ISneakers[];
-  loading: null | boolean;
-  error: null | string;
+  status: 'init' | 'loading' | 'error' | 'success';
 }
 
 export interface ISneakers {
@@ -12,6 +11,6 @@ export interface ISneakers {
   category: string;
   image_url: string;
   quantity: number;
-  size?: Array<{ size: string }>;
+  size?: Array<object>;
   SelectSize: string;
 }

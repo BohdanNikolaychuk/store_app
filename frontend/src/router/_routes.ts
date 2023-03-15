@@ -7,6 +7,7 @@ const ROUTES = {
   NOT_MATCHING: '*',
   CART: '/cart',
   FORM_CREATE: '/admin/form',
-  EDITBYID: (id?: string) => (id ? `/admin/edit/${id}` : '/admin/edit/:id')
+  EDITBYID: (id?: string) => (id ? `/admin/edit/${id}` : '/admin/edit/:id'),
+  ADMIN: '/admin'
 };
 export default ROUTES;

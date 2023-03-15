@@ -1,9 +1,8 @@
 import { Button, Flex, Stack, Text } from '@chakra-ui/react';
 import { useAppSelector } from '../../hooks/redux.hooks';
-import { selectCartData } from '../../store/cart/selectors';
 
 export const CartOrderSummary = () => {
-  const { cart } = useAppSelector(selectCartData);
+  const cart = useAppSelector((state) => state.cart.cart);
   const getTotal = () => {
     let totalQuantity = 0;
     let totalPrice = 0;
@@ -27,11 +26,7 @@ export const CartOrderSummary = () => {
         </Flex>
       </Stack>
 
-      <Button rounded="none" _hover={{ background: 'gray' }} bg="#333333" mt="10" p="6">
-        <Text color="white" textTransform="uppercase">
-          Checkout
-        </Text>
-      </Button>
+      <Button variant="primary">Checkout</Button>
     </Stack>
   );
 };

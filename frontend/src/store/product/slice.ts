@@ -4,8 +4,7 @@ import { State } from './types';
 
 const initialState: State = {
   sneakers: [],
-  loading: null,
-  error: ''
+  status: 'init'
 };
 
 const sneakersSlice = createSlice({
@@ -24,21 +23,19 @@ const sneakersSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAllSneakers.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchAllSneakers.fulfilled, (state, action) => {
-      state.loading = false;
+    builder
+      .addCase(fetchAllSneakers.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllSneakers.fulfilled, (state, action) => {
+        state.status = 'success';
 
-      state.sneakers = action.payload;
-    });
-    builder.addCase(fetchAllSneakers.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });
+        state.sneakers = action.payload;
+      })
+      .addCase(fetchAllSneakers.rejected, (state) => {
+        state.status = 'error';
+      });
   }
 });
 
-export const { removeSneaker, addSneaker, editSneaker } = sneakersSlice.actions;
-
-export default sneakersSlice.reducer;
+export const { reducer: SneakerReducer, actions: SneakerActions } = sneakersSlice;

@@ -1,15 +1,13 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
-import { selectAuthData } from '../../store/user/selectors';
 
-const PublicRoute = ({ children }: any) => {
-  const { isAuth } = useAppSelector(selectAuthData);
+export const PublicRoute = ({ children }: any) => {
+  const location = useLocation();
+
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
   if (!isAuth) {
-    return <Navigate to={ROUTES.LOGIN} replace />;
+    return <Navigate to={ROUTES.LOGIN} replace state={{ prev: location.pathname }} />;
   }
   return children;
 };
-
-export default PublicRoute;

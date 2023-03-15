@@ -6,8 +6,13 @@ import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 import { ISneakers } from '../../store/product/types';
-const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
+
+export const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
   const dispatch = useAppDispatch();
+
+  const onDeletedProduct = (id: string) => {
+    dispatch(fetchDeleteSneaker(id));
+  };
 
   return (
     <>
@@ -24,7 +29,7 @@ const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
                 <Button as={NavLink} to={ROUTES.EDITBYID(_id)}>
                   <RiFileEditLine />
                 </Button>
-                <Button onClick={() => dispatch(fetchDeleteSneaker(_id))}>
+                <Button onClick={() => onDeletedProduct(_id)}>
                   <FiDelete />
                 </Button>
               </Td>
@@ -35,5 +40,3 @@ const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
     </>
   );
 };
-
-export default TableProduct;

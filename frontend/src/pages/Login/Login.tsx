@@ -6,14 +6,14 @@ import {
   Box,
   Button,
   Container,
-  Heading,
   Input,
   InputGroup,
   InputRightElement,
   Stack,
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ROUTES from '../../router/_routes';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,15 +21,18 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { ILogin } from '../../@types/IAuth.interface';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import { useAppDispatch } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
-import { selectAuthData } from '../../store/user/selectors';
-
-const Login: React.FC = () => {
-  const { isAuth } = useAppSelector(selectAuthData);
+type RedirectLocationState = {
+  redirectTo: Location;
+};
+export const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { state: locationState } = useLocation();
   const navigate = useNavigate();
-
+  const toast = useToast({
+    position: 'top'
+  });
   const dispatch = useAppDispatch();
 
   const validationSchema = Yup.object().shape({
@@ -49,11 +52,22 @@ const Login: React.FC = () => {
   });
 
   const onSubmit = async (UserData: ILogin) => {
-    dispatch(userLogin(UserData));
+    try {
+      let res = await dispatch(userLogin(UserData)).unwrap();
+      if (res.access_token) {
+        navigate(-1);
+      }
+    } catch (error) {
+      toast({
+        description:
+          'The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.',
+        status: 'error',
+        duration: 2500,
+        isClosable: true
+      });
+    }
   };
-  if (isAuth) {
-    navigate(ROUTES.MAIN);
-  }
+
   return (
     <>
       <Box bg="#f9f9f9" w="100%" p={4} color="white">
@@ -64,11 +78,6 @@ const Login: React.FC = () => {
       <Container maxW="600px">
         <Stack mt="40px" bg="#f7f7f7" spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack align={'center'}>
-              <Heading fontSize={'4xl'} textAlign={'center'}>
-                Login
-              </Heading>
-            </Stack>
             <Box rounded={'lg'} p={8}>
               <Stack spacing={4}>
                 <Box>
@@ -143,5 +152,3 @@ const Login: React.FC = () => {
     </>
   );
 };
-
-export default Login;

@@ -1,4 +1,4 @@
-const Nike = () => {
+export const Nike = () => {
   return (
     <>
       <svg
@@ -15,5 +15,3 @@ const Nike = () => {
     </>
   );
 };
-
-export default Nike;

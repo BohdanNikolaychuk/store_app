@@ -1,34 +1,28 @@
-import { Box, Center, Heading, Image, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Center, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import { ISneakers } from '../../store/product/types';
 
-const CardView = ({ _id, name, price, category, image_url }: ISneakers) => {
+export const CardView = memo(({ name, price, image_url }: ISneakers) => {
   return (
-    <>
-      <Center py={12}>
-        <Box
-          sx={{ maxWidth: '250px', height: '360px', position: 'relative' }}
-          role={'group'}
-          maxW={'330px'}
-          w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
-          rounded={'lg'}
-          pos={'relative'}
-          zIndex={1}>
-          <Image height={'auto'} width={'282px'} objectFit={'cover'} src={image_url} />
+    <Center>
+      <Box
+        sx={{ maxWidth: '250px', height: '360px', position: 'relative' }}
+        maxW={'330px'}
+        w={'full'}>
+        <Image height={'auto'} width={'282px'} src={image_url} />
 
-          <Stack pt={10} align={'center'}>
-            <Heading fontSize={'md'} color={'#696969'} fontWeight={500}>
-              {name}
-            </Heading>
-            <Stack direction={'row'} align={'center'}>
-              <Text fontWeight={500}>${price}</Text>
-            </Stack>
+        <Stack>
+          <Heading fontSize={17} color={'#696969'} fontWeight={500}>
+            {name}
+          </Heading>
+          <Stack>
+            <Text fontSize={20} fontWeight={600}>
+              ${price}
+            </Text>
           </Stack>
-        </Box>
-      </Center>
-    </>
+        </Stack>
+      </Box>
+    </Center>
   );
-};
-
-export default CardView;
+});

@@ -1,9 +1,8 @@
 export interface State {
   isAuth: null | boolean;
   user: null | IUser;
-  loading: null | boolean;
   token: null | string;
-  error: null | string;
+  status: 'init' | 'loading' | 'error' | 'success';
 }
 export interface IUser {
   username: string;

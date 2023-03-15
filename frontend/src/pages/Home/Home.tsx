@@ -1,42 +1,25 @@
-import { Input } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
-import TableProduct from '../../components/Table/Table';
-
+import { Box, Button } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
-import { selectSneakersData } from '../../store/product/selectors';
-import { ISneakers } from '../../store/product/types';
-import { selectAuthData } from '../../store/user/selectors';
+import ROUTES from '../../router/_routes';
+import { Admin } from '../Admin/Admin';
 
-const Home = () => {
-  const { user } = useAppSelector(selectAuthData);
+export const Home = () => {
+  const user = useAppSelector((state) => state.auth.user);
 
-  const { sneakers } = useAppSelector(selectSneakersData);
-  const [filter, setFilter] = useState('');
-  const filterSne = useMemo(
-    () =>
-      sneakers.filter((element) => {
-        if (!filter) {
-          return sneakers;
-        }
-        return (
-          element._id.toLowerCase().trim().includes(filter.toLowerCase().trim()) ||
-          element.name.trim().toLowerCase().includes(filter.toLowerCase().trim())
-        );
-      }),
-    [sneakers, filter]
-  );
+  const renderRoleInterface = () => {
+    if (user?.roles.includes('admin')) {
+      return <Admin />;
+    } else {
+      return (
+        <Box display="flex" justifyContent="center" mt="8">
+          <Button variant="primary" as={NavLink} to={ROUTES.SHOP}>
+            Shop Now
+          </Button>
+        </Box>
+      );
+    }
+  };
 
-  return (
-    <>
-      <></>
-      {user?.roles[0] === 'admin' && (
-        <Input placeholder="Filter by id or name" onChange={(e) => setFilter(e.target.value)} />
-      )}
-
-      {user?.roles[0] === 'admin' &&
-        filterSne.map((element: ISneakers) => <TableProduct key={element._id} {...element} />)}
-    </>
-  );
+  return <>{renderRoleInterface()}</>;
 };
-
-export default Home;

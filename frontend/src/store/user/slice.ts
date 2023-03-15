@@ -6,8 +6,7 @@ const initialState: State = {
   isAuth: null,
   user: null,
   token: null,
-  loading: null,
-  error: null
+  status: 'init'
 };
 
 const authSlice = createSlice({
@@ -15,9 +14,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.error = null;
       state.isAuth = null;
-      state.loading = null;
+      state.status = 'init';
       state.user = null;
       state.token = null;
       localStorage.removeItem('userToken');
@@ -25,40 +23,39 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     //login
-    builder.addCase(userLogin.pending, (state) => {
-      state.loading = true;
-    });
+    builder
+      .addCase(userLogin.pending, (state) => {
+        state.status = 'loading';
+      })
 
-    builder.addCase(userLogin.fulfilled, (state, action) => {
-      state.loading = false;
-      state.isAuth = true;
-      state.user = action.payload.user;
-      state.token = action.payload.access_token;
-    });
-    builder.addCase(userLogin.rejected, (state, action) => {
-      state.loading = false;
-      state.isAuth = null;
-      state.error = action.payload as string;
-    });
+      .addCase(userLogin.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.isAuth = true;
+        state.user = action.payload.user;
+        state.token = action.payload.access_token;
+      })
+      .addCase(userLogin.rejected, (state, action) => {
+        state.status = 'error';
+        state.isAuth = null;
+      })
 
-    //get current user
+      //get current user
 
-    builder.addCase(getCurrentUser.pending, (state) => {
-      state.loading = true;
-    });
+      .addCase(getCurrentUser.pending, (state) => {
+        state.status = 'loading';
+      })
 
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      state.loading = false;
-      state.isAuth = true;
-      state.user = action.payload;
-    });
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.isAuth = true;
+        state.user = action.payload;
+      })
 
-    builder.addCase(getCurrentUser.rejected, (state, action) => {
-      state.isAuth = null;
-      state.error = action.payload as string;
-    });
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isAuth = null;
+        state.status = 'error';
+      });
   }
 });
-export const { logout } = authSlice.actions;
 
-export default authSlice.reducer;
+export const { reducer: AuthReducer, actions: AuthActions } = authSlice;

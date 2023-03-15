@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ILogin, IRegistration } from '../../@types/IAuth.interface';
 import axios from '../../utils/axios';
-import { logout } from './slice';
+import { AuthActions } from './slice';
 
 export const registerUser = createAsyncThunk(
   'auth/register',
@@ -49,7 +49,7 @@ export const getCurrentUser = createAsyncThunk(
       const { data } = await axios.get(`auth/me`);
       return data;
     } catch (err: any) {
-      dispatch(logout());
+      dispatch(AuthActions.logout());
       let error = err;
       if (error.response.message) {
         throw rejectWithValue(error.message);
