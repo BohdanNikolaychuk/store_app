@@ -55,7 +55,7 @@ export const Login: React.FC = () => {
     try {
       let res = await dispatch(userLogin(UserData)).unwrap();
       if (res.access_token) {
-        navigate(-1);
+        navigate(ROUTES.MAIN);
       }
     } catch (error) {
       toast({
