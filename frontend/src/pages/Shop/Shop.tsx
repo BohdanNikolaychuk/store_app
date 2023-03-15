@@ -1,26 +1,17 @@
 import { Box, Container, SimpleGrid, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { CardView } from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
 
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { BreadCrumb } from '../../components/BreadCrumb/BreadCrumb';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import { fetchAllSneakers } from '../../store/product/asyncActions';
+import { useAppSelector } from '../../hooks/redux.hooks';
 import { filterSneakers } from '../../store/product/selectors';
 import { ISneakers } from '../../store/product/types';
 
 export const Shop = () => {
   console.log('Shop render');
-
-  const dispatch = useAppDispatch();
-  const sneakers = useAppSelector((state) => state.sneakers.sneakers);
-  useEffect(() => {
-    if (sneakers.length === 0) {
-      dispatch(fetchAllSneakers());
-    }
-  }, [sneakers]);
 
   const status = useAppSelector((state) => state.sneakers.status);
   const user = useAppSelector((state) => state.auth.user);

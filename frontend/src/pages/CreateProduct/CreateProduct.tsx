@@ -62,7 +62,7 @@ export const CreateProduct: FC = memo(() => {
     dispatch(fetchAddSneaker(data));
 
     navigate(ROUTES.MAIN);
-    setData(clearData);
+    // setData(clearData);
   };
 
   return (
