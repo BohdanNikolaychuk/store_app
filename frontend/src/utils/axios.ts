@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instans = axios.create({
-  baseURL: 'https://storeapp-production-8870.up.railway.app/'
+  baseURL: 'https://store-app-81jf.onrender.com/'
 });
 
 instans.interceptors.request.use(async (config) => {
