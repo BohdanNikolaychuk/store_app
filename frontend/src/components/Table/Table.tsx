@@ -7,7 +7,7 @@ import ROUTES from '../../router/_routes';
 import { fetchDeleteSneaker } from '../../store/product/asyncActions';
 import { ISneakers } from '../../store/product/types';
 
-export const TableProduct = ({ _id, name, price, category, image_url }: ISneakers) => {
+export const TableProduct = ({ _id, name, price, category }: ISneakers) => {
   const dispatch = useAppDispatch();
 
   const onDeletedProduct = (id: string) => {

@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   HStack,
+  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -59,15 +60,20 @@ export const Header: FC = memo(() => {
         <>
           <HStack as={'nav'} spacing={10} display="flex" justifyContent="center">
             {MemoLink.map((link) => (
-              <NavLink
+              <Link
+                as={NavLink}
+                _activeLink={{ fontWeight: 'bold' }}
                 to={
                   link.name === 'Shop All' ? `${ROUTES.SHOP}` : `${ROUTES.SHOP}?name=${link!.name}`
                 }
+                opacity="0.5"
+                _hover={{ opacity: '1' }}
+                background={'inherit'}
                 key={link!.name}>
                 <Button opacity="0.5" _hover={{ opacity: '1' }} background={'inherit'}>
                   {link!.icon}
                 </Button>
-              </NavLink>
+              </Link>
             ))}
           </HStack>
         </>

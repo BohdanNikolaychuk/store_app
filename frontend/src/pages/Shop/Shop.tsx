@@ -1,5 +1,4 @@
 import { Box, Container, SimpleGrid, Text } from '@chakra-ui/react';
-import { useState } from 'react';
 
 import { CardView } from '../../components/Card/Card';
 import ROUTES from '../../router/_routes';
@@ -11,12 +10,9 @@ import { filterSneakers } from '../../store/product/selectors';
 import { ISneakers } from '../../store/product/types';
 
 export const Shop = () => {
-  console.log('Shop render');
-
   const status = useAppSelector((state) => state.sneakers.status);
   const user = useAppSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
-  const [selectSort, setSelectSort] = useState('Sort By Name');
 
   const visibleSneakers = useAppSelector(filterSneakers(searchParams.get('name')));
 
@@ -27,18 +23,16 @@ export const Shop = () => {
   const renderBreads = () => {
     if (!searchParams.get('name')) {
       return (
-        <>
-          <Text
-            variant={'h1'}
-            pt="2"
-            pb="2"
-            color="black"
-            display="flex"
-            justifyContent="center"
-            fontSize="4xl">
-            Shop All
-          </Text>
-        </>
+        <Text
+          variant={'h1'}
+          pt="2"
+          pb="2"
+          color="black"
+          display="flex"
+          justifyContent="center"
+          fontSize="4xl">
+          Shop All
+        </Text>
       );
     } else {
       return (
@@ -51,13 +45,6 @@ export const Shop = () => {
       );
     }
   };
-
-  // const visibleSneakers = sneakers.filter((element) => {
-  //   if (!searchParams.get('name')) {
-  //     return sneakers;
-  //   }
-  //   return element.category === searchParams.get('name');
-  // });
 
   return (
     <>

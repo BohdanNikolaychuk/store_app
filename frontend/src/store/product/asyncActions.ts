@@ -52,11 +52,12 @@ type UpdateSneaker = {
 
 export const fetchEditSneakerByID = createAsyncThunk(
   'sneaker/put',
-  async (props: UpdateSneaker, { rejectWithValue, dispatch }) => {
+  async (props: UpdateSneaker, { dispatch }) => {
     try {
       const { data } = await axios.put(`/store/products/${props.id}`, { ...props });
 
       dispatch(SneakerActions.editSneaker(data));
+      return data;
     } catch (err: any) {}
   }
 );

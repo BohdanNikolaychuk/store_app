@@ -24,7 +24,7 @@ export const Admin = () => {
   );
   return (
     <>
-      <Button variant="primary" as={NavLink} to={ROUTES.FORM_CREATE}>
+      <Button m="20px" variant="primary" as={NavLink} to={ROUTES.FORM_CREATE}>
         Create new product
       </Button>
 

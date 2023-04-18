@@ -23,12 +23,15 @@ import * as Yup from 'yup';
 import { ILogin } from '../../@types/IAuth.interface';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
+
 type RedirectLocationState = {
   redirectTo: Location;
 };
+
 export const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { state: locationState } = useLocation();
+  const location = useLocation();
+
   const navigate = useNavigate();
   const toast = useToast({
     position: 'top'
@@ -56,6 +59,9 @@ export const Login: React.FC = () => {
       let res = await dispatch(userLogin(UserData)).unwrap();
       if (res.access_token) {
         navigate(ROUTES.MAIN);
+      }
+      if (location.state.prev) {
+        navigate(location.state.prev);
       }
     } catch (error) {
       toast({

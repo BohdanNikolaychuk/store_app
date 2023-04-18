@@ -12,7 +12,7 @@ import { FC, memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
-import { fetchAddSneaker, NewSneaker } from '../../store/product/asyncActions';
+import { NewSneaker, fetchAddSneaker } from '../../store/product/asyncActions';
 
 const clearData: NewSneaker = {
   name: '',
@@ -60,9 +60,8 @@ export const CreateProduct: FC = memo(() => {
 
   const OnCreateNewSneaker = () => {
     dispatch(fetchAddSneaker(data));
-
     navigate(ROUTES.MAIN);
-    // setData(clearData);
+    setData(clearData);
   };
 
   return (
@@ -153,11 +152,10 @@ export const CreateProduct: FC = memo(() => {
           </FormControl>
         </Box>
       </Flex>
-      <Box>
-        <Button onClick={() => OnCreateNewSneaker()} type="submit" variant="primary">
-          Create Product
-        </Button>
-      </Box>
+
+      <Button ml="30px" onClick={() => OnCreateNewSneaker()} type="submit" variant="primary">
+        Create Product
+      </Button>
     </Box>
   );
 });
