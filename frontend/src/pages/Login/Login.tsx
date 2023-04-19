@@ -24,13 +24,15 @@ import { ILogin } from '../../@types/IAuth.interface';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import { userLogin } from '../../store/user/asyncActions';
 
-type RedirectLocationState = {
-  redirectTo: Location;
-};
-
+interface LocationState {
+  pathname: string;
+  state: {
+    prev: string;
+  };
+}
 export const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const location = useLocation();
+  const location = useLocation<LocationState>();
 
   const navigate = useNavigate();
   const toast = useToast({
@@ -64,6 +66,7 @@ export const Login: React.FC = () => {
         navigate(location.state.prev);
       }
     } catch (error) {
+      console.log(error);
       toast({
         description:
           'The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.',

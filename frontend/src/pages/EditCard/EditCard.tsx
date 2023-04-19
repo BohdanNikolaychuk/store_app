@@ -36,9 +36,11 @@ export const EditCard = () => {
       image_url: file,
       category
     };
-    await dispatch(fetchEditSneakerByID(newEditSneaker));
-
-    navigate(ROUTES.ADMIN);
+    await dispatch(fetchEditSneakerByID(newEditSneaker))
+      .unwrap()
+      .then((res) => {
+        navigate(ROUTES.ADMIN);
+      });
   };
 
   const onSetFile = (e: any) => {

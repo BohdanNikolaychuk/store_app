@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instans = axios.create({
-  baseURL: 'https://store-app-81jf.onrender.com/'
+  baseURL: 'http://localhost:3000/'
 });
 
 instans.interceptors.request.use(async (config) => {
