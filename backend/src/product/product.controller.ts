@@ -8,14 +8,14 @@ import {
   Post,
   Put,
   UseGuards,
-} from '@nestjs/common';
-import { CreateProductDTO } from './dtos/create-product.dto';
-import { ProductService } from './product.service';
+} from '@nestjs/common'
+import { CreateProductDTO } from './dtos/create-product.dto'
+import { ProductService } from './product.service'
 
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { Role } from '../auth/enums/role.enum';
-import { RolesGuard } from '../auth/guards/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard'
+import { Roles } from '../auth/decorators/roles.decorator'
+import { Role } from '../auth/enums/role.enum'
+import { RolesGuard } from '../auth/guards/roles.guard'
 @Controller('store/products')
 export class ProductController {
   constructor(private productService: ProductService) {}
@@ -29,7 +29,9 @@ export class ProductController {
   @Get('/:id')
   async getProduct(@Param('id') id: string) {
     const product = await this.productService.getProduct(id);
-    if (!product) throw new NotFoundException('Product does not exist!');
+    if (!product) {
+      throw new NotFoundException('Product does not exist!');
+    }
     return product;
   }
 

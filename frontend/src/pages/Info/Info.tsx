@@ -26,11 +26,9 @@ export const Info = memo(() => {
   const sneakerByID = useAppSelector(selectedSneakersByID(id!));
   const actions = useActionCreators(CartActions);
   const [SelectSize, setSize] = useState('');
-
   const onSelectSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSize(e.target.value);
   };
-
   const onAddToCart = () => {
     const AddSneakerToCart = {
       ...sneakerByID,
