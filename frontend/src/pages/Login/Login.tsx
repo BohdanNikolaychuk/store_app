@@ -62,7 +62,7 @@ export const Login: React.FC = () => {
       if (res.access_token) {
         navigate(ROUTES.MAIN);
       }
-      if (location.state.prev) {
+      if (location.state.prev !== null) {
         navigate(location.state.prev);
       }
     } catch (error) {

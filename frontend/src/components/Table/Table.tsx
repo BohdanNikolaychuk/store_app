@@ -1,4 +1,4 @@
-import { Button, Table, TableContainer, Tbody, Td, Tr } from '@chakra-ui/react';
+import { Button, Table, TableContainer, Tbody, Td, Tr, Hide } from '@chakra-ui/react';
 import { FiDelete } from 'react-icons/fi';
 import { RiFileEditLine } from 'react-icons/ri';
 import { NavLink } from 'react-router-dom';
@@ -22,9 +22,10 @@ export const TableProduct = ({ _id, name, price, category }: ISneakers) => {
             <Tr>
               <Td>{_id}</Td>
               <Td>{name}</Td>
-
-              <Td>{category}</Td>
-              <Td>{price}$</Td>
+              <Hide below="xl">
+                <Td>{category}</Td>
+                <Td>{price}$</Td>
+              </Hide>
               <Td>
                 <Button as={NavLink} to={ROUTES.EDITBYID(_id)}>
                   <RiFileEditLine />

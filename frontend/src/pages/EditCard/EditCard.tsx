@@ -10,14 +10,15 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
+import { useActionCreators, useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import ROUTES from '../../router/_routes';
 import { fetchEditSneakerByID } from '../../store/product/asyncActions';
 import { selectedSneakersByID } from '../../store/product/selectors';
+import { SneakerActions } from '../../store/product/slice';
 
 export const EditCard = () => {
   const { id } = useParams();
-
+  const actions = useActionCreators(SneakerActions);
   const sneakerByID = useAppSelector(selectedSneakersByID(id!));
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -41,6 +42,14 @@ export const EditCard = () => {
       .then((res) => {
         navigate(ROUTES.ADMIN);
       });
+  };
+
+  const removeSelectSize = (size: string) => {
+    const DeleteSize = {
+      ...sneakerByID,
+      removeSize: size
+    };
+    actions.removeSize(DeleteSize);
   };
 
   const onSetFile = (e: any) => {
@@ -81,11 +90,12 @@ export const EditCard = () => {
         <Box w="50%" p="10">
           <FormControl>
             <FormLabel>Size</FormLabel>
-            <Select border="none" rounded="none" bg="#f7f7f7" placeholder="Select option">
-              {sneakerByID?.size?.map((element: any) => (
-                <option key={element.size}>{element.size}</option>
-              ))}
-            </Select>
+
+            {sneakerByID?.size?.map((element: any) => (
+              <Button key={element.size} onClick={() => removeSelectSize(element.size)}>
+                {element.size}
+              </Button>
+            ))}
           </FormControl>
           <FormControl>
             <FormLabel>Price</FormLabel>
